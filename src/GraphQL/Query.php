@@ -20,8 +20,15 @@ class Query
                     'resolve' => static fn ($rootValue, array $args): string => $rootValue['prefix'] . $args['message'],
                 ],
                 'products' => [
-                    'type' => Type::listOf(Types\ProductType::define()),
-                    'resolve' => static fn () => Resolvers\ProductsResolver::resolve(),
+                    'type' => Type::listOf(Types\Product::define()),
+                    'resolve' => static fn () => Resolvers\ProductsResolver::index(),
+                ],
+                'product' => [
+                    'type' => Types\Product::define(),
+                    'args' => [
+                        'id' => ['type' => Type::nonNull(Type::string())],
+                    ],
+                    'resolve' => static fn ($rootValue, array $args) => Resolvers\ProductsResolver::show($args['id']),
                 ],
             ],
         ]);

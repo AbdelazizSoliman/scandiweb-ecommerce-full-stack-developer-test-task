@@ -30,7 +30,7 @@ function base_path($path = '')
  * @param int $code The HTTP status code.
  * @param string $message The error message.
  */
-function abort($code = 404, $message = 'Resource not found.')
+function abort($code = 404, $message = 'Resource not found')
 {
     http_response_code($code);
     header('Content-Type: application/json');

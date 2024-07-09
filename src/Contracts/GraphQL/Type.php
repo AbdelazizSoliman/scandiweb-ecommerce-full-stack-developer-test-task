@@ -4,7 +4,7 @@ namespace App\Contracts\GraphQL;
 
 use GraphQL\Type\Definition\ObjectType;
 
-interface TypeContract
+interface Type
 {
     public static function define(): ObjectType;
 }
