@@ -3,11 +3,11 @@
 namespace App\GraphQL\Resolvers;
 
 use App\Database;
-use App\Contracts\GraphQL\ResolverContract;
+use App\Contracts\GraphQL\Resolver;
 
-class ProductsResolver implements ResolverContract
+class ProductsResolver implements Resolver
 {
-    public static function resolve(): array
+    public static function index(): array
     {
         $dbConfig = require base_path('src/config/database.php');
         $db = new Database($dbConfig);
@@ -20,5 +20,20 @@ class ProductsResolver implements ResolverContract
         }
 
         return $products;
+    }
+
+    public static function show($productId): array
+    {
+        $dbConfig = require base_path('src/config/database.php');
+        $db = new Database($dbConfig);
+
+        $product = $db->query('SELECT * FROM products where id = :id LIMIT 1', [
+            "id" => $productId,
+        ])->findOrFail();
+
+        $gallery = json_decode($product['gallery'], true);
+        $product['gallery'] = $gallery !== null && is_array($gallery) ? $gallery : [];
+
+        return $product;
     }
 }
