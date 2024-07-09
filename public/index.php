@@ -2,7 +2,13 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+define('BASE_PATH', dirname(__DIR__) . '/');
+
+Dotenv\Dotenv::createImmutable(BASE_PATH)->load();
+
+include_once BASE_PATH . 'src/Core/helpers.php';
+
+$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $r->post('/graphql', [App\Controller\GraphQL::class, 'handle']);
 });
 
