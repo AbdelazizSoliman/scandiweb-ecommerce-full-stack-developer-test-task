@@ -10,8 +10,10 @@ use GraphQL\Type\SchemaConfig;
 use RuntimeException;
 use Throwable;
 
-class GraphQL {
-    static public function handle() {
+class GraphQL
+{
+    static public function handle()
+    {
         try {
             $queryType = new ObjectType([
                 'name' => 'Query',
@@ -25,7 +27,7 @@ class GraphQL {
                     ],
                 ],
             ]);
-        
+
             $mutationType = new ObjectType([
                 'name' => 'Mutation',
                 'fields' => [
@@ -39,24 +41,24 @@ class GraphQL {
                     ],
                 ],
             ]);
-        
-            // See docs on schema options:
-            // https://webonyx.github.io/graphql-php/schema-definition/#configuration-options
+
+            // Configure the GraphQL schema
             $schema = new Schema(
                 (new SchemaConfig())
-                ->setQuery($queryType)
-                ->setMutation($mutationType)
+                    ->setQuery($queryType)
+                    ->setMutation($mutationType)
             );
-        
+
+            // Handle GraphQL execution
             $rawInput = file_get_contents('php://input');
             if ($rawInput === false) {
                 throw new RuntimeException('Failed to get php://input');
             }
-        
+
             $input = json_decode($rawInput, true);
             $query = $input['query'];
             $variableValues = $input['variables'] ?? null;
-        
+
             $rootValue = ['prefix' => 'You said: '];
             $result = GraphQLBase::executeQuery($schema, $query, $rootValue, null, $variableValues);
             $output = $result->toArray();
@@ -72,3 +74,23 @@ class GraphQL {
         return json_encode($output);
     }
 }
+
+<?php
+
+// Add to existing file
+
+    private static function defineProductType()
+    {
+        return new ObjectType([
+            'name' => 'Product',
+            'fields' => [
+                'id' => Type::string(),
+                'name' => Type::string(),
+                'inStock' => Type::boolean(),
+                'gallery' => Type::listOf(Type::string()),
+                'description' => Type::string(),
+                'category' => Type::string(),
+                'brand' => Type::string(),
+            ],
+        ]);
+    }
