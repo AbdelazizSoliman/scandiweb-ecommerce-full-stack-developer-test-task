@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Database;
 use GraphQL\GraphQL as GraphQLBase;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
@@ -15,6 +16,9 @@ class GraphQL
     static public function handle()
     {
         try {
+            // Define GraphQL types
+            $productType = self::defineProductType();
+
             $queryType = new ObjectType([
                 'name' => 'Query',
                 'fields' => [
@@ -24,6 +28,10 @@ class GraphQL
                             'message' => ['type' => Type::string()],
                         ],
                         'resolve' => static fn ($rootValue, array $args): string => $rootValue['prefix'] . $args['message'],
+                    ],
+                    'products' => [
+                        'type' => Type::listOf($productType),
+                        'resolve' => fn () => self::resolveProducts(),
                     ],
                 ],
             ]);
@@ -74,7 +82,6 @@ class GraphQL
         return json_encode($output);
     }
 
-
     private static function defineProductType()
     {
         return new ObjectType([
@@ -105,5 +112,4 @@ class GraphQL
 
         return $products;
     }
-
 }
