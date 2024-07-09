@@ -9,8 +9,7 @@ class ProductsResolver implements Resolver
 {
     public static function index(): array
     {
-        $dbConfig = require base_path('src/config/database.php');
-        $db = new Database($dbConfig);
+        $db = new Database();
         $products = $db->query('SELECT * FROM products')->get();
 
         // Parse the JSON 'gallery' field for each product
@@ -24,8 +23,7 @@ class ProductsResolver implements Resolver
 
     public static function show($productId): array
     {
-        $dbConfig = require base_path('src/config/database.php');
-        $db = new Database($dbConfig);
+        $db = new Database();
 
         $product = $db->query('SELECT * FROM products where id = :id LIMIT 1', [
             "id" => $productId,
