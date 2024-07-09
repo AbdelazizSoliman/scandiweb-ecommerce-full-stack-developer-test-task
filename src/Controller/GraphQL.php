@@ -73,11 +73,7 @@ class GraphQL
         header('Content-Type: application/json; charset=UTF-8');
         return json_encode($output);
     }
-}
 
-<?php
-
-// Add to existing file
 
     private static function defineProductType()
     {
@@ -94,3 +90,20 @@ class GraphQL
             ],
         ]);
     }
+
+    public static function resolveProducts()
+    {
+        $config = require base_path('config.php');
+        $db = new Database($config['database']);
+        $products = $db->query('SELECT * FROM products')->get();
+
+        // Parse the JSON 'gallery' field for each product
+        foreach ($products as &$product) {
+            $gallery = json_decode($product['gallery'], true);
+            $product['gallery'] = $gallery !== null && is_array($gallery) ? $gallery : [];
+        }
+
+        return $products;
+    }
+
+}
