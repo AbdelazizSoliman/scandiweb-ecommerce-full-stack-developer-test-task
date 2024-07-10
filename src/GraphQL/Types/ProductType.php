@@ -20,6 +20,8 @@ class ProductType implements IType
                 'description' => Type::string(),
                 'category' => Type::string(),
                 'brand' => Type::string(),
+                'attributes' => Type::listOf(AttributeSetType::define()),
+                'prices' => Type::listOf(PriceType::define()),
             ],
         ]);
     }
