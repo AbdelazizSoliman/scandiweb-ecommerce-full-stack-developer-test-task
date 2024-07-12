@@ -2,10 +2,10 @@ import { ProductCard } from '../components';
 
 function Categories() {
   return (
-    <main>
-      <h1 className="text-heading mb-20">Women</h1>
+    <main className="mt-14">
+    <h1 className="heading-h1 !mb-16">Women</h1>
 
-      <section className="flex flex-wrap gap-y-8 -mx-2">
+    <section className="flex flex-wrap -mx-2 gap-y-8">
         <ProductCard />
         <ProductCard />
         <ProductCard />

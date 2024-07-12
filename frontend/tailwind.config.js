@@ -8,8 +8,9 @@ export default {
         roboto: ['Roboto', 'system-ui', 'sans-serif'],
       },
       colors: {
-        accent: '#5ECE7B',
-        text: '#1D1F22',
+        primary: 'hsl(136, 53%, 59%)',
+        accent: 'hsl(18, 80%, 55%)',
+        text: 'hsl(216, 8%, 12%)',
       },
     },
   },
