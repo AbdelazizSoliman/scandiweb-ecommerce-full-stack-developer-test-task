@@ -1,43 +1,65 @@
 import { Component } from 'react';
-import ProductAttributes from '../components/ProductAttributes';
+import { ProductAttributes } from '../components';
 
 class ProductDetail extends Component {
-  constructor(props) {
-    super(props);
-
-    // Dummy data for items in the cart
-    this.state = {
-      item: {
-        id: 1,
-        name: 'Item 1',
-        price: 50,
-        attributes: [
-          { type: 'size', values: ['XS', 'S', 'M', 'L'] },
-          { type: 'color', values: ['#FF0000', '#0000FF', '#00FF00'] },
-        ],
-        quantity: 2,
-        description:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi natus ipsa nam pariatur perferendis in, eaque commodi, impedit dolor labore, adipisci ab laboriosam? Tempora, facere aliquid totam eius earum quibusdam?',
-        image:
-          'https://images.canadagoose.com/image/upload/w_1333,c_scale,f_auto,q_auto:best/v1634058169/product-image/2409L_61_o.png',
-      },
-    };
-  }
-
   render() {
-    const { item } = this.state;
+    // Sample product data from API
+    const product = {
+      id: 'huarache-x-stussy-le',
+      name: 'Nike Air Huarache Le',
+      prices: [
+        {
+          amount: 144.69,
+          currency: {
+            label: 'USD',
+            symbol: '$',
+          },
+        },
+      ],
+      attributes: [
+        {
+          id: 'Size',
+          items: [
+            {
+              displayValue: '40',
+              value: '40',
+            },
+            {
+              displayValue: '41',
+              value: '41',
+            },
+            {
+              displayValue: '42',
+              value: '42',
+            },
+            {
+              displayValue: '43',
+              value: '43',
+            },
+          ],
+        },
+      ],
+      description: '<p>Great sneakers for everyday use!</p>',
+      gallery: [
+        'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_2_720x.jpg?v=1612816087',
+        'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_1_720x.jpg?v=1612816087',
+        'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_3_720x.jpg?v=1612816087',
+        'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_5_720x.jpg?v=1612816087',
+        'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_4_720x.jpg?v=1612816087',
+      ],
+    };
 
     return (
       <main className="flex flex-col items-start mt-14 md:flex-row">
         <div className="md:w-2/3">
           <img
-            src={item.image}
-            alt={item.name}
+            src={product.gallery[0]}
+            alt={product.name}
             className="object-cover w-full max-h-96"
           />
         </div>
 
-        <ProductAttributes className="md:w-1/3 md:pl-4" item={item}>
+        <ProductAttributes className="md:w-1/3 md:pl-4" product={product}>
           <button type="button" className="w-full mb-8 btn-cta">
             Add to Cart
           </button>
