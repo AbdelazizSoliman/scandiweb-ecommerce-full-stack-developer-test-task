@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { ProductAttributes } from '../components';
+import { ProductAttributes, ProductImageCarousel } from '../components';
 
 class ProductDetail extends Component {
   render() {
@@ -51,13 +51,7 @@ class ProductDetail extends Component {
 
     return (
       <main className="flex flex-col items-start mt-14 md:flex-row">
-        <div className="md:w-2/3">
-          <img
-            src={product.gallery[0]}
-            alt={product.name}
-            className="object-cover w-full max-h-96"
-          />
-        </div>
+        <ProductImageCarousel images={product.gallery} alt={product.name} />
 
         <ProductAttributes className="md:w-1/3 md:pl-4" product={product}>
           <button type="button" className="w-full mb-8 btn-cta">
