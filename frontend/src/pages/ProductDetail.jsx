@@ -28,7 +28,9 @@ function ProductDetail() {
       </div>
 
       <ProductAttributes className="md:w-1/3 md:pl-4" item={item}>
-        <button className="w-full mb-8 btn-cta">Add to Cart</button>
+        <button type="button" className="w-full mb-8 btn-cta">
+          Add to Cart
+        </button>
       </ProductAttributes>
     </main>
   );

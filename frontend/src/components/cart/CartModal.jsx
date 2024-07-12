@@ -31,7 +31,9 @@ function CartModal({ items = [] }) {
               </div>
             </div>
 
-            <button className="w-full mt-8 btn-cta">Place Order</button>
+            <button type="button" className="w-full mt-8 btn-cta">
+              Place Order
+            </button>
           </div>
         </>
       )}
