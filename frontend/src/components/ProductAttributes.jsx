@@ -1,9 +1,12 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
 
 class ProductAttributes extends Component {
   render() {
     const { product, children, className, isModalView = false } = this.props;
+
     const totalPrice =
       product.prices && product.prices.length > 0
         ? parseFloat(product.prices[0]?.amount) * (product.quantity ?? 1)
@@ -80,7 +83,9 @@ class ProductAttributes extends Component {
         {children}
 
         {!isModalView && (
-          <div className="text-sm font-roboto">{product.description}</div>
+          <div className="text-sm font-roboto">
+            {parse(DOMPurify.sanitize(product.description))}
+          </div>
         )}
       </div>
     );
