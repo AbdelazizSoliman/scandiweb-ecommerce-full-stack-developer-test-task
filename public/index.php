@@ -1,5 +1,15 @@
 <?php
 
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Origin: *');
+
+// If the request is an OPTIONS request (pre-flight check)
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("HTTP/1.1 200 OK");
+    exit;
+}
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 define('BASE_PATH', dirname(__DIR__) . '/');
