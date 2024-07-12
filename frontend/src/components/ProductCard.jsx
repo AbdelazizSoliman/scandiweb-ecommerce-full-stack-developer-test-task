@@ -11,13 +11,13 @@ function ProductCard() {
             className="w-full h-auto"
           />
 
-          <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute bottom-0 right-4 transform translate-y-1/2 bg-accent text-white p-2 rounded-full">
-            <Cart />
+          <button className="cta opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute bottom-0 right-4 transform translate-y-1/2 p-3 rounded-full">
+            <Cart color="white" />
           </button>
         </div>
 
         <h3 className="font-light text-lg capitalize">Running short</h3>
-        <h2 className="text-lg">$50.00</h2>
+        <div className="text-lg">$50.00</div>
       </div>
     </article>
   );
