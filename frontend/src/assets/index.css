@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.cta {
+    @apply px-16 py-2 bg-accent text-white font-semibold uppercase;
+  }
+  
+  .text-heading {
+    @apply font-semibold capitalize text-3xl mb-6;
+  }
