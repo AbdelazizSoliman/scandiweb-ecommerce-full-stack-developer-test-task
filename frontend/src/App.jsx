@@ -1,28 +1,24 @@
 import { Component } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Categories, ErrorScreen, HomeLayout, ProductDetail } from './pages';
+import { RouterProvider } from 'react-router-dom';
+import router from './router';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <HomeLayout />,
-    errorElement: <ErrorScreen />,
-    children: [
-      {
-        index: true,
-        element: <Categories />,
-      },
-      {
-        path: 'products/:productId',
-        element: <ProductDetail />,
-      },
-    ],
-  },
-]);
+const graphqlEndpoint = import.meta.env.PROD
+  ? '/graphql'
+  : 'http://localhost:8000/graphql';
+
+const apolloClient = new ApolloClient({
+  uri: graphqlEndpoint,
+  cache: new InMemoryCache(),
+});
 
 class App extends Component {
   render() {
-    return <RouterProvider router={router} />;
+    return (
+      <ApolloProvider client={apolloClient}>
+        <RouterProvider router={router}></RouterProvider>
+      </ApolloProvider>
+    );
   }
 }
 
