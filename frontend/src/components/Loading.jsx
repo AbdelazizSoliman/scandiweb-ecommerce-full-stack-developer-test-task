@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 import { Spinner } from './';
 
-class Loading extends React.Component {
+class Loading extends Component {
   componentDidMount() {
     document.body.classList.add('overflow-hidden');
   }
