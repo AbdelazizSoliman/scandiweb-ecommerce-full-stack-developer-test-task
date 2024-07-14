@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Cart, CartModal, Logo } from './';
+import { Cart, CartModal, Logo } from '.';
 
-class Navbar extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,4 +109,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default Header;

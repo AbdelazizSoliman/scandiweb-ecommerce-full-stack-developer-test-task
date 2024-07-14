@@ -1,12 +1,12 @@
 import { Component } from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import { Header } from '../components';
 
 class HomeLayout extends Component {
   render() {
     return (
       <>
-        <Navbar />
+        <Header />
         <Outlet />
       </>
     );
