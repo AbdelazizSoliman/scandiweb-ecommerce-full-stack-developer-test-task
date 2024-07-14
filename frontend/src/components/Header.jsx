@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Cart, CartModal, Logo } from '.';
+import { Cart, CartModal, Logo, NavigationMenu } from '.';
 
 class Header extends Component {
   constructor(props) {
@@ -66,17 +66,7 @@ class Header extends Component {
 
     return (
       <header className="relative z-10 flex items-center justify-between">
-        <nav className="z-10">
-          <ul className="flex gap-6 uppercase">
-            <li className="pb-4 border-b-2 cursor-pointer nav-active">Women</li>
-            <li className="pb-4 border-b-2 border-transparent cursor-pointer hover:text-primary">
-              Men
-            </li>
-            <li className="pb-4 border-b-2 border-transparent cursor-pointer hover:text-primary">
-              Kids
-            </li>
-          </ul>
-        </nav>
+        <NavigationMenu />
 
         <div className="absolute inset-x-0 flex items-center justify-center mx-auto">
           <Link to="/">
