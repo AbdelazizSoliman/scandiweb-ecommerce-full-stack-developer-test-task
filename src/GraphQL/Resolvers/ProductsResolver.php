@@ -40,10 +40,26 @@ class ProductsResolver implements Resolver
         $product['gallery'] = $gallery !== null && is_array($gallery) ? $gallery : [];
 
         // Fetch related prices for the product
-        $prices = $db->query('SELECT * FROM prices WHERE product_id = :productId', [
+        $prices = $db->query('
+        SELECT p.amount, c.label , c.symbol 
+        FROM prices p
+        JOIN currencies c ON p.currency = c.label
+        WHERE p.product_id = :productId
+    ', [
             'productId' => $product['id'],
         ])->get();
-        $product['prices'] = $prices;
+
+        $productPrices = [];
+        foreach ($prices as $price) {
+            $productPrices[] = [
+                'amount' => $price['amount'],
+                'currency' => [
+                    'label' => $price['label'],
+                    'symbol' => $price['symbol'],
+                ],
+            ];
+        }
+        $product['prices'] = $productPrices;
 
         $attributes = [];
         // Fetch related attributes and items for the product

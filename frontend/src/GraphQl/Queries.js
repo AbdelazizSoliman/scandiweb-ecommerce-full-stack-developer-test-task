@@ -19,7 +19,10 @@ export const getProductsQuery = gql`
       brand
       prices {
         amount
-        currency
+        currency {
+          label
+          symbol
+        }
       }
       category
       attributes {
@@ -47,7 +50,10 @@ export const getProductQuery = gql`
       brand
       prices {
         amount
-        currency
+        currency {
+          label
+          symbol
+        }
       }
       category
       attributes {
