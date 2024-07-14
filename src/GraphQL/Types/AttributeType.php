@@ -13,9 +13,9 @@ class AttributeType implements IType
         return new ObjectType([
             'name' => 'Attribute',
             'fields' => [
-                'id' => Type::string(),
                 'displayValue' => Type::string(),
                 'value' => Type::string(),
+                'id' => Type::string(),
             ],
         ]);
     }
