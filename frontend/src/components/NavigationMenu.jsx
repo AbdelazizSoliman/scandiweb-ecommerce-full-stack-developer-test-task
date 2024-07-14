@@ -30,15 +30,17 @@ function NavigationMenu() {
             (location.pathname === '/' && isFirstCategory && !location.search);
 
           return (
-            <li
-              key={category}
-              className={`pb-4 border-b-2 ${
-                isSelected
-                  ? 'nav-active'
-                  : 'border-transparent hover:text-primary'
-              }`}
-            >
-              <Link to={`?categories=${category}`}>{category}</Link>
+            <li key={category}>
+              <Link
+                to={`?categories=${category}`}
+                className={`pb-4 border-b-2 ${
+                  isSelected
+                    ? 'nav-active'
+                    : 'border-transparent hover:text-primary'
+                }`}
+              >
+                {category}
+              </Link>
             </li>
           );
         })}
