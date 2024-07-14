@@ -4,23 +4,27 @@ import { useEffect, useState } from 'react';
 
 function NavigationMenu() {
   const location = useLocation();
-  const { categoriesData } = useDataContext();
+  const { categoriesData, selectedCategory, setSelectedCategory } =
+    useDataContext();
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    if (categoriesData) {
-      setCategories(categoriesData.map((category) => category.name));
-    }
+    setCategories(categoriesData.map((category) => category.name));
   }, [categoriesData]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const category = params.get('categories');
+    if (category) {
+      setSelectedCategory(category);
+    }
+  }, [location.search, setSelectedCategory]);
 
   return (
     <nav className="z-10">
       <ul className="flex gap-6 uppercase">
-        {categories.map((category, index) => {
-          const isFirstCategory = index === 0;
-          const isSelected =
-            location.search.includes(`categories=${category}`) ||
-            (location.pathname === '/' && isFirstCategory && !location.search);
+        {categories.map((category) => {
+          const isSelected = category === selectedCategory;
 
           return (
             <li key={category}>

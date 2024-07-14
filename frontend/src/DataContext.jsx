@@ -4,8 +4,9 @@ import { createContext, useContext, useState } from 'react';
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-  const [categoriesData, setCategoriesData] = useState(null);
-  const [productsData, setProductsData] = useState(null);
+  const [categoriesData, setCategoriesData] = useState([]);
+  const [productsData, setProductsData] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   return (
     <DataContext.Provider
@@ -14,6 +15,8 @@ export const DataProvider = ({ children }) => {
         setCategoriesData,
         productsData,
         setProductsData,
+        selectedCategory,
+        setSelectedCategory,
       }}
     >
       {children}
