@@ -32,13 +32,11 @@ const ProductAttributes = ({
     if (existingIndex !== -1) {
       updatedSelectedAttributes[existingIndex] = {
         id: attributeSetId,
-        attributeId: attributeSetId,
         value: attribute.value,
       };
     } else {
       updatedSelectedAttributes.push({
         id: attributeSetId,
-        attributeId: attributeSetId,
         value: attribute.value,
       });
     }
@@ -52,8 +50,7 @@ const ProductAttributes = ({
 
   const isAttributeValueSelected = (attributeSetId, attribute) => {
     return selectedAttributes.some(
-      (attr) =>
-        attr.attributeId === attributeSetId && attr.value === attribute.value
+      (attr) => attr.id === attributeSetId && attr.value === attribute.value
     );
   };
 
