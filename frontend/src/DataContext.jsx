@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { createContext, useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const DataContext = createContext();
 
@@ -28,8 +29,7 @@ export const DataProvider = ({ children }) => {
       );
 
       if (missingAttributes.length > 0) {
-        alert('Please select all attributes');
-        return;
+        return toast.error('Please select all attributes! ⚠️');
       }
 
       attributes = selectedAttributes.map((attr) => ({
@@ -73,7 +73,7 @@ export const DataProvider = ({ children }) => {
     setCartItems(existingCartItems);
     localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
 
-    alert('Product Added to cart');
+    toast.success('Product added to cart! 🛒');
   };
 
   const updateCartItemAttribute = (product, newAttributes) => {

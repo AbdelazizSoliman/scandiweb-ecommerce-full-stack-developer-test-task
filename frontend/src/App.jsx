@@ -35,7 +35,6 @@ function FetchData() {
 
   useEffect(() => {
     const category = new URLSearchParams(location.search).get('category');
-    console.log(category);
 
     fetchCategories();
     fetchProducts({ variables: { category } });
