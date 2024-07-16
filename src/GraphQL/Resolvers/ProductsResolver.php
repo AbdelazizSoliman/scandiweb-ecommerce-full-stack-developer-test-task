@@ -7,10 +7,18 @@ use App\Contracts\GraphQL\Resolver;
 
 class ProductsResolver implements Resolver
 {
-    public static function index(): array
+    public static function index(string $category = null): array
     {
         $db = new Database();
-        $products = $db->query('SELECT * FROM products')->get();
+        $query = 'SELECT * FROM products';
+        $params = [];
+
+        if ($category && strtolower($category) !== 'all') {
+            $query .= ' WHERE category = :category';
+            $params['category'] = $category;
+        }
+
+        $products = $db->query($query, $params)->get();
 
         foreach ($products as &$product) {
             self::fetchProductDetails($product);
@@ -40,14 +48,15 @@ class ProductsResolver implements Resolver
         $product['gallery'] = $gallery !== null && is_array($gallery) ? $gallery : [];
 
         // Fetch related prices for the product
-        $prices = $db->query('
-        SELECT p.amount, c.label , c.symbol 
+        $prices = $db->query(
+            'SELECT p.amount, c.label , c.symbol 
         FROM prices p
         JOIN currencies c ON p.currency = c.label
-        WHERE p.product_id = :productId
-    ', [
-            'productId' => $product['id'],
-        ])->get();
+        WHERE p.product_id = :productId',
+            [
+                'productId' => $product['id'],
+            ]
+        )->get();
 
         $productPrices = [];
         foreach ($prices as $price) {
