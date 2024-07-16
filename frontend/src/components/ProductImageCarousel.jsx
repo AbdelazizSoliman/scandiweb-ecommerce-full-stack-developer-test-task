@@ -43,7 +43,7 @@ class ProductImageCarousel extends Component {
     const { currentIndex, mainImageHeight } = this.state;
 
     return (
-      <section className="mb-6 md:w-2/3 md:mb-0">
+      <section className="mb-6 md:w-2/3 md:mb-0" data-testid="product-gallery">
         {!!images?.length && (
           <div className="relative flex">
             <div

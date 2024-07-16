@@ -8,11 +8,16 @@ function ProductCard({ product = {} }) {
   const { addToCart } = useDataContext();
 
   return (
-    <article className="w-full px-4 sm:w-1/2 md:w-1/3 lg:w-1/4">
-      <div className="p-4 overflow-hidden transition-shadow duration-500 cursor-pointer hover:shadow-xl group">
+    <article
+      className="w-full px-4 sm:w-1/2 md:w-1/3 lg:w-1/4"
+      data-testid={`cart-item-attribute-${product.name
+        .replace(/\s+/g, '-')
+        .toLowerCase()}`}
+    >
+      <div className="p-4 overflow-hidden transition-shadow duration-500 hover:shadow-xl group">
         <div className="relative mb-6">
           <Link to={`/products/${product.id}`}>
-            <div style={{ position: 'relative' }}>
+            <div className="relative min-h-52">
               <img
                 src={product.gallery[0] ?? searchingImg}
                 alt={product.name}

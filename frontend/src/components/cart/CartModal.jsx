@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import CartModalItem from './CartModalItem';
-import { useDataContext } from '../../DataContext';
+import PlaceOrderBtn from './PlaceOrderBtn';
 
 function CartModal({ cartItems = [] }) {
-  const { placeOrder } = useDataContext();
-
   const totalPrice = cartItems
     .reduce(
       (total, item) =>
@@ -29,7 +27,7 @@ function CartModal({ cartItems = [] }) {
         <p className="mt-2 text-gray-500">Your bag is empty.</p>
       ) : (
         <>
-          <div className="space-y-8 overflow-y-auto max-h-80">
+          <div className="py-4 space-y-8 overflow-y-auto max-h-80">
             {cartItems.map((item) => (
               <CartModalItem key={item.id} item={item} />
             ))}
@@ -38,18 +36,12 @@ function CartModal({ cartItems = [] }) {
           <div className="pt-4 mt-4">
             <div className="flex items-center justify-between">
               <h3 className="font-semibold font-roboto">Total</h3>
-              <div className="font-bold">
+              <div className="font-bold" data-testid="cart-total">
                 {`${cartItems[0]?.product.prices[0].currency.symbol}${totalPrice}`}
               </div>
             </div>
 
-            <button
-              type="button"
-              className="w-full mt-8 btn-cta"
-              onClick={placeOrder}
-            >
-              Place Order
-            </button>
+            <PlaceOrderBtn className="w-full mt-8" />
           </div>
         </>
       )}

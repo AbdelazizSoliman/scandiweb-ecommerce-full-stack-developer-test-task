@@ -7,9 +7,7 @@ const Header = () => {
   const [showModal, setShowModal] = useState(false);
   const { cartItems } = useDataContext();
 
-  const toggleModal = () => {
-    setShowModal((prevState) => !prevState);
-  };
+  const toggleModal = () => setShowModal((prevState) => !prevState);
 
   useEffect(() => {
     document.body.style.overflowY = showModal ? 'hidden' : 'auto';
@@ -25,14 +23,21 @@ const Header = () => {
         </Link>
       </div>
 
-      <div className="relative z-10 cursor-pointer" onClick={toggleModal}>
+      <button
+        className="relative z-10 cursor-pointer"
+        onClick={toggleModal}
+        data-testid="cart-btn"
+      >
         <Cart />
         {cartItems.length > 0 && (
-          <div className="absolute flex items-center justify-center w-5 h-5 -mt-1 -mr-1 text-sm text-white rounded-full -top-1 -right-2 bg-text">
+          <div
+            className="absolute flex items-center justify-center w-5 h-5 -mt-1 -mr-1 text-sm text-white rounded-full -top-1 -right-2 bg-text"
+            data-testid="cart-item-amount"
+          >
             {cartItems.reduce((total, item) => total + item.quantity, 0)}
           </div>
         )}
-      </div>
+      </button>
 
       {showModal && (
         <>

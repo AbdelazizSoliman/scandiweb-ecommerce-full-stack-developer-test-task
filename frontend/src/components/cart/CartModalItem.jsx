@@ -23,11 +23,13 @@ function CartModalItem({ item = {} }) {
         <ActionBtn
           text="+"
           onClick={() => updateCartItemQuantity(item.id, 1)}
+          data="cart-item-amount-increase"
         />
         <span>{item.quantity}</span>
         <ActionBtn
           text="-"
           onClick={() => updateCartItemQuantity(item.id, -1)}
+          data="cart-item-amount-decrease"
         />
       </div>
 

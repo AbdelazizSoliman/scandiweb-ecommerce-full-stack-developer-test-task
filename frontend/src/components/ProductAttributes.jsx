@@ -73,7 +73,13 @@ const ProductAttributes = ({
       {isModalView && <div className="my-2 font-bold">{totalPrice}</div>}
 
       {product.attributes?.map((attributeSet) => (
-        <div key={attributeSet.id} className="mt-4">
+        <div
+          key={attributeSet.id}
+          className="mt-4"
+          data-testid={`${
+            isModalView ? 'cart-item' : 'product'
+          }-attribute-${attributeSet.name.replace(/\s+/g, '-').toLowerCase()}`}
+        >
           <h3
             className={`${
               isModalView ? 'font-sm' : 'font-bold uppercase'
@@ -101,6 +107,15 @@ const ProductAttributes = ({
                   style={{ backgroundColor: attribute.value }}
                   title={attribute.displayValue}
                   onClick={() => handleAttributeClick(attribute)}
+                  data-testid={`${
+                    isModalView ? 'cart-item' : 'product'
+                  }-attribute-${attributeSet.name
+                    .replace(/\s+/g, '-')
+                    .toLowerCase()}-${attribute.displayValue
+                    .replace(/\s+/g, '-')
+                    .toLowerCase()}${
+                    isAttributeValueSelected(attribute) ? '-selected' : ''
+                  }`}
                 >
                   <div className="absolute inset-0 border border-gray-200"></div>
                 </button>
@@ -118,6 +133,15 @@ const ProductAttributes = ({
                       : 'bg-white'
                   } px-1 flex items-center justify-center transition-colors border border-gray-800 hover:bg-gray-800 hover:text-white`}
                   onClick={() => handleAttributeClick(attribute)}
+                  data-testid={`${
+                    isModalView ? 'cart-item' : 'product'
+                  }-attribute-${attributeSet.name
+                    .replace(/\s+/g, '-')
+                    .toLowerCase()}-${attribute.displayValue
+                    .replace(/\s+/g, '-')
+                    .toLowerCase()}${
+                    isAttributeValueSelected(attribute) ? '-selected' : ''
+                  }`}
                 >
                   {attribute.displayValue}
                 </button>
@@ -143,13 +167,14 @@ const ProductAttributes = ({
           type="button"
           className="w-full mb-8 btn-cta"
           onClick={() => addToCart(product, true, selectedAttributes)}
+          data-testid="add-to-cart"
         >
           Add to Cart
         </button>
       )}
 
       {!isModalView && (
-        <div className="text-sm font-roboto">
+        <div className="text-sm font-roboto" data-testid="product-description">
           {parse(DOMPurify.sanitize(product.description))}
         </div>
       )}

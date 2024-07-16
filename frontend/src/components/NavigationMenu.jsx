@@ -49,6 +49,9 @@ function NavigationMenu() {
                     ? 'nav-active'
                     : 'border-transparent hover:text-primary'
                 }`}
+                data-testid={
+                  isSelected ? 'active-category-link' : 'category-link'
+                }
                 onClick={() => handleCategoryChange(category)}
               >
                 {category}
