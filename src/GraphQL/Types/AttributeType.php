@@ -12,9 +12,10 @@ class AttributeType extends ObjectType
         parent::__construct([
             'name' => 'Attribute',
             'fields' => [
-                'displayValue' => Type::string(),
-                'value' => Type::string(),
                 'id' => Type::string(),
+                'attribute_id' => Type::string(),
+                'value' => Type::string(),
+                'displayValue' => Type::string(),
             ],
         ]);
     }
