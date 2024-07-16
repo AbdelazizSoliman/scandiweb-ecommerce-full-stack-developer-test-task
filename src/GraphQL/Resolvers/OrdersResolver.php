@@ -87,7 +87,7 @@ class OrdersResolver
         }
 
         if (!$product['inStock']) {
-            abort(400, 'Product is not in stock.');
+            abort(400, "Unfortunately, '{$product['name']}' is out of stock. Please check back later.");
         }
 
         // Validate attributeValues
