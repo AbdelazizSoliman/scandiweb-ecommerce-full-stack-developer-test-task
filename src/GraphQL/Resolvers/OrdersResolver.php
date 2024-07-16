@@ -97,22 +97,18 @@ class OrdersResolver
 
         // Iterate over attributeValues and validate each attribute
         foreach ($item['attributeValues'] as $attribute) {
-            $attributeId = $attribute['id'];
-            $value = $attribute['value'];
-
             // Query the database to check if the attribute exists
             $result = $db->query(
-                'SELECT COUNT(*) FROM product_attributes WHERE product_id = ? AND attribute_id = ? AND value = ?',
+                'SELECT COUNT(*) FROM product_attributes WHERE id = ? AND value = ? LIMIT 1',
                 [
-                    $productId,
-                    $attributeId,
-                    $value
+                    $attribute['id'],
+                    $attribute['value']
                 ]
             );
 
             // Check if attribute exists
             if ($result->fetchColumn() == 0) {
-                abort(400, "Oops! '{$product['name']}' with '$attributeId' '$value' does not exist or is invalid. Please check and try again.");
+                abort(400, "Oops! '{$product['name']}' with '{$attribute['value']}' attribute does not exist or is invalid. Please check and try again.");
             }
         }
     }
