@@ -38,19 +38,44 @@ class Database
         return $this->statement->fetchAll();
     }
 
-    public function find()
+    public function fetch()
     {
         return $this->statement->fetch();
     }
 
     public function findOrFail()
     {
-        $result = $this->find();
+        $result = $this->fetch();
 
         if (!$result) {
             abort();
         }
 
         return $result;
+    }
+
+    public function fetchColumn()
+    {
+        return $this->statement->fetchColumn();
+    }
+
+    public function getLastInsertId()
+    {
+        return $this->connection->lastInsertId();
+    }
+
+    public function beginTransaction()
+    {
+        return $this->connection->beginTransaction();
+    }
+
+    public function commit()
+    {
+        return $this->connection->commit();
+    }
+
+    public function rollback()
+    {
+        return $this->connection->rollBack();
     }
 }
