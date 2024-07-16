@@ -1,53 +1,49 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Cart } from './';
 import searchingImg from '../assets/search.svg';
+import { useDataContext } from '../DataContext';
 
-class ProductCard extends Component {
-  render() {
-    const { product = {} } = this.props;
-    return (
-      <article className="w-full px-4 sm:w-1/2 md:w-1/3 lg:w-1/4">
-        <div className="p-4 overflow-hidden transition-shadow duration-500 cursor-pointer hover:shadow-xl group">
-          <div className="relative mb-6">
-            <Link to={`/products/${product.id}`}>
-              <div style={{ position: 'relative' }}>
-                <img
-                  src={product.gallery[0] ?? searchingImg}
-                  alt={product.name}
-                  loading="lazy"
-                  className="object-cover w-full h-auto"
-                />
-                {!product.inStock && (
-                  <div className="absolute inset-0 flex items-center justify-center px-2 py-1 text-2xl uppercase bg-white bg-opacity-50 text-muted">
-                    Out of Stock
-                  </div>
-                )}
-              </div>
-            </Link>
+function ProductCard({ product = {} }) {
+  const { addToCart } = useDataContext();
 
-            {product.inStock && (
-              <button
-                onClick={() => {
-                  // add a product with its default (first in each options array) options to cart
-                  console.log('Add to cart');
-                }}
-                className="absolute bottom-0 p-2 transition-opacity duration-300 transform translate-y-1/2 rounded-full opacity-0 cta group-hover:opacity-100 right-4"
-              >
-                <Cart color="white" className="w-5 h-5" />
-              </button>
-            )}
-          </div>
+  return (
+    <article className="w-full px-4 sm:w-1/2 md:w-1/3 lg:w-1/4">
+      <div className="p-4 overflow-hidden transition-shadow duration-500 cursor-pointer hover:shadow-xl group">
+        <div className="relative mb-6">
+          <Link to={`/products/${product.id}`}>
+            <div style={{ position: 'relative' }}>
+              <img
+                src={product.gallery[0] ?? searchingImg}
+                alt={product.name}
+                loading="lazy"
+                className="object-cover w-full h-auto"
+              />
+              {!product.inStock && (
+                <div className="absolute inset-0 flex items-center justify-center px-2 py-1 text-2xl uppercase bg-white bg-opacity-70 text-muted">
+                  Out of Stock
+                </div>
+              )}
+            </div>
+          </Link>
 
-          <h3 className="text-lg font-light capitalize">{product.name}</h3>
-          <div className={`${!product.inStock ? 'text-muted ' : ''}text-lg`}>
-            {product.prices[0]?.currency?.symbol} {product.prices[0]?.amount}
-          </div>
+          {product.inStock && (
+            <button
+              onClick={() => addToCart(product)}
+              className="absolute bottom-0 p-2 transition-opacity duration-300 transform translate-y-1/2 rounded-full opacity-0 cta group-hover:opacity-100 right-4"
+            >
+              <Cart color="white" className="w-5 h-5" />
+            </button>
+          )}
         </div>
-      </article>
-    );
-  }
+
+        <h3 className="text-lg font-light capitalize">{product.name}</h3>
+        <div className={`${!product.inStock ? 'text-muted ' : ''}text-lg`}>
+          {product.prices[0]?.currency?.symbol} {product.prices[0]?.amount}
+        </div>
+      </div>
+    </article>
+  );
 }
 
 ProductCard.propTypes = {
@@ -60,7 +56,7 @@ ProductCard.propTypes = {
     brand: PropTypes.string.isRequired,
     prices: PropTypes.arrayOf(
       PropTypes.shape({
-        amount: PropTypes.number.isRequired,
+        amount: PropTypes.string.isRequired,
         currency: PropTypes.shape({
           label: PropTypes.string.isRequired,
           symbol: PropTypes.string.isRequired,
