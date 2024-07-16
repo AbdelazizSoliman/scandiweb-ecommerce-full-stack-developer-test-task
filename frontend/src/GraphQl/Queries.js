@@ -29,6 +29,7 @@ const getProductFields = `
     type
     items {
       id
+      attribute_id
       value
       displayValue
     }
