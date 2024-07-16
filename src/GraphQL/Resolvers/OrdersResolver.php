@@ -91,7 +91,15 @@ class OrdersResolver
         }
 
         // Validate attributeValues
-        if (!isset($item['attributeValues']) || empty($item['attributeValues'])) {
+        $attributeCount = $db->query(
+            'SELECT COUNT(DISTINCT attribute_id) FROM product_attributes WHERE product_id = ?',
+            [$productId]
+        )->fetchColumn();
+
+        if (
+            !isset($item['attributeValues']) ||
+            $attributeCount !== count($item['attributeValues'])
+        ) {
             abort(400, 'Attribute values are required.');
         }
 
