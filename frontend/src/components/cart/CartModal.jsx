@@ -4,15 +4,16 @@ import CartModalItem from './CartModalItem';
 
 class CartModal extends Component {
   render() {
-    const { products = [] } = this.props;
+    const { cartItems = [] } = this.props;
 
-    const totalPrice = products.reduce(
-      (total, product) => total + product.prices[0]?.amount * product.quantity,
+    const totalPrice = cartItems.reduce(
+      (total, item) =>
+        total + parseFloat(item.product?.prices[0]?.amount) * item.quantity,
       0
     );
 
-    const totalItems = products.reduce(
-      (total, product) => total + product.quantity,
+    const totalItems = cartItems.reduce(
+      (total, item) => total + item.quantity,
       0
     );
 
@@ -28,8 +29,8 @@ class CartModal extends Component {
         ) : (
           <>
             <div className="space-y-8 overflow-y-auto max-h-80">
-              {products.map((product) => (
-                <CartModalItem key={product.id} product={product} />
+              {cartItems.map((item) => (
+                <CartModalItem key={item.id} item={item} />
               ))}
             </div>
 
@@ -51,7 +52,7 @@ class CartModal extends Component {
 }
 
 CartModal.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.object),
+  cartItems: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default CartModal;
