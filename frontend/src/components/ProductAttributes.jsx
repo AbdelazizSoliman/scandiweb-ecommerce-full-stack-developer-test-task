@@ -46,7 +46,11 @@ const ProductAttributes = ({
     setSelectedAttributes(updatedSelectedAttributes);
 
     if (isModalView) {
-      updateCartItemAttribute(product, updatedSelectedAttributes);
+      updateCartItemAttribute(
+        product,
+        selectedAttributes,
+        updatedSelectedAttributes
+      );
     }
   };
 

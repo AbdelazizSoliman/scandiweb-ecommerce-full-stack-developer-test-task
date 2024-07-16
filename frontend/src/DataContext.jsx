@@ -15,12 +15,11 @@ export const DataProvider = ({ children }) => {
   const addToCart = (
     product = {},
     shouldProvideAttributes = false,
-    selectedAttributes = [] // Accept selected attributes
+    selectedAttributes = []
   ) => {
     let attributes;
 
     if (shouldProvideAttributes) {
-      // Check if all product attributes are selected
       const missingAttributes = product.attributes.filter(
         (attr) =>
           !selectedAttributes.some(
@@ -48,7 +47,6 @@ export const DataProvider = ({ children }) => {
 
     const existingCartItems = [...cartItems];
 
-    // Check if the product already exists in the cart with the same attributes
     const existingItemIndex = existingCartItems.findIndex(
       (item) =>
         item.product.id === product.id &&
@@ -56,54 +54,69 @@ export const DataProvider = ({ children }) => {
     );
 
     if (existingItemIndex !== -1) {
-      // If the product exists, increase its quantity
       existingCartItems[existingItemIndex].quantity += 1;
     } else {
-      // If the product does not exist, add it to cart
       const newItem = {
         id: new Date().valueOf(),
         product,
         selectedAttributes: attributes,
         quantity: 1,
       };
+
       existingCartItems.unshift(newItem);
     }
 
-    // Update cart items and persist in localStorage
     setCartItems(existingCartItems);
     localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
 
-    toast.success('Product added to cart! 🛒');
+    toast.success('Item added to cart! 🛒');
   };
 
-  const updateCartItemAttribute = (product, newAttributes) => {
-    // Find the index of the cart item corresponding to the given product
-    const index = cartItems.findIndex((item) => item.product.id === product.id);
+  const updateCartItemAttribute = (product, oldAttributes, newAttributes) => {
+    const itemIndex = cartItems.findIndex(
+      (item) =>
+        item.product.id === product.id &&
+        JSON.stringify(item.selectedAttributes) ===
+          JSON.stringify(oldAttributes)
+    );
 
-    if (index !== -1) {
-      // Update the selectedAttributes of the cart item with the newAttributes
+    if (itemIndex === -1) return;
+
+    const duplicateItemIndex = cartItems.findIndex(
+      (item) =>
+        item.product.id === product.id &&
+        JSON.stringify(item.selectedAttributes) ===
+          JSON.stringify(newAttributes)
+    );
+
+    const existingCartItems = [...cartItems];
+    if (duplicateItemIndex === -1) {
       const updatedCartItem = {
-        ...cartItems[index],
+        ...cartItems[itemIndex],
         selectedAttributes: newAttributes,
       };
 
-      // Update the cartItems array with the updated cart item
-      const updatedCartItems = [...cartItems];
-      updatedCartItems[index] = updatedCartItem;
+      existingCartItems[itemIndex] = updatedCartItem;
 
-      // Update the cartItems state
-      setCartItems(updatedCartItems);
+      toast.success('Cart item updated successfully!');
+    } else {
+      existingCartItems[itemIndex].quantity +=
+        existingCartItems[duplicateItemIndex].quantity;
 
-      // Update localStorage with the updated cartItems
-      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+      existingCartItems.splice(duplicateItemIndex, 1);
+
+      toast.success('Item successfully merged with existing cart item!');
     }
+
+    setCartItems(existingCartItems);
+
+    localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
   };
 
   const updateCartItemQuantity = (itemId, value) => {
     const existingCartItems =
       JSON.parse(localStorage.getItem('cartItems')) || [];
 
-    // Find the item in the cart
     const index = existingCartItems.findIndex((item) => item.id === itemId);
 
     if (index !== -1) {
@@ -115,11 +128,14 @@ export const DataProvider = ({ children }) => {
 
       localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
       setCartItems(existingCartItems);
+
+      toast.success('Cart item updated successfully!');
     }
   };
 
   const emptyCart = () => {
     localStorage.removeItem('cartItems');
+
     setCartItems([]);
   };
 
