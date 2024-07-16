@@ -63,7 +63,7 @@ const ProductAttributes = ({
   };
 
   return (
-    <div className={`${className}`}>
+    <div className={`${className}${product.inStock ? '' : ' opacity-70'}`}>
       <h2
         className={isModalView ? 'capitalize font-light text-lg' : 'heading-h1'}
       >
@@ -103,10 +103,13 @@ const ProductAttributes = ({
                     isAttributeValueSelected(attribute)
                       ? 'border-primary'
                       : 'border-white'
-                  } border transition-colors hover:border-primary`}
+                  } border ${
+                    product.inStock ? 'hover:border-primary' : ''
+                  } transition-colors`}
                   style={{ backgroundColor: attribute.value }}
                   title={attribute.displayValue}
                   onClick={() => handleAttributeClick(attribute)}
+                  disabled={!product.inStock}
                   data-testid={`${
                     isModalView ? 'cart-item' : 'product'
                   }-attribute-${attributeSet.name
@@ -131,7 +134,10 @@ const ProductAttributes = ({
                     isAttributeValueSelected(attribute)
                       ? 'bg-text text-white'
                       : 'bg-white'
-                  } px-1 flex items-center justify-center transition-colors border border-gray-800 hover:bg-gray-800 hover:text-white`}
+                  } px-1 flex items-center justify-center transition-colors border ${
+                    product.inStock ? 'hover:bg-gray-800 hover:text-white' : ''
+                  } border-gray-800`}
+                  disabled={!product.inStock}
                   onClick={() => handleAttributeClick(attribute)}
                   data-testid={`${
                     isModalView ? 'cart-item' : 'product'
