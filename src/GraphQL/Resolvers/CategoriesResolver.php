@@ -3,9 +3,8 @@
 namespace App\GraphQL\Resolvers;
 
 use App\Database;
-use App\Contracts\GraphQL\Resolver;
 
-class CategoriesResolver implements Resolver
+class CategoriesResolver
 {
     public static function index(): array
     {
