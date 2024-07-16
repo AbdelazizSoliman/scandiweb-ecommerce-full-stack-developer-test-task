@@ -24,7 +24,7 @@ export const DataProvider = ({ children }) => {
       const missingAttributes = product.attributes.filter(
         (attr) =>
           !selectedAttributes.some(
-            (selectedAttr) => selectedAttr.id === attr.id
+            (selectedAttr) => selectedAttr.attributeId === attr.name
           )
       );
 
@@ -34,12 +34,14 @@ export const DataProvider = ({ children }) => {
 
       attributes = selectedAttributes.map((attr) => ({
         id: attr.id,
+        attributeId: attr.attributeId,
         value: attr.value,
       }));
     } else {
       // If no attributes selected, use default ones
       attributes = product.attributes?.map((attr) => ({
-        id: attr.id,
+        id: attr.items[0].id,
+        attributeId: attr.items[0].attribute_id,
         value: attr.items[0].value,
       }));
     }
