@@ -3,14 +3,13 @@
 namespace App\GraphQL\Types;
 
 use GraphQL\Type\Definition\Type;
-use App\Contracts\GraphQL\Type as IType;
 use GraphQL\Type\Definition\ObjectType;
 
-class ProductType implements IType
+class ProductType extends ObjectType
 {
-    public static function define(): ObjectType
+    public function __construct()
     {
-        return new ObjectType([
+        parent::__construct([
             'name' => 'Product',
             'fields' => [
                 'id' => Type::string(),
@@ -19,8 +18,8 @@ class ProductType implements IType
                 'gallery' => Type::listOf(Type::string()),
                 'description' => Type::string(),
                 'category' => Type::string(),
-                'attributes' => Type::listOf(AttributeSetType::define()),
-                'prices' => Type::listOf(PriceType::define()),
+                'attributes' => Type::listOf(new AttributeSetType()),
+                'prices' => Type::listOf(new PriceType()),
                 'brand' => Type::string(),
             ],
         ]);

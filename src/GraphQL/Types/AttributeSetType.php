@@ -3,20 +3,19 @@
 namespace App\GraphQL\Types;
 
 use GraphQL\Type\Definition\Type;
-use App\Contracts\GraphQL\Type as IType;
 use GraphQL\Type\Definition\ObjectType;
 
-class AttributeSetType implements IType
+class AttributeSetType extends ObjectType
 {
-    public static function define(): ObjectType
+    public function __construct()
     {
-        return new ObjectType([
+        parent::__construct([
             'name' => 'AttributeSet',
             'fields' => [
                 'id' => Type::string(),
                 'name' => Type::string(),
                 'type' => Type::string(),
-                'items' => Type::listOf(AttributeType::define()),
+                'items' => Type::listOf(new AttributeType()),
             ],
         ]);
     }

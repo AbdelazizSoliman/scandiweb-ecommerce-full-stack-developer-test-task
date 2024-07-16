@@ -3,14 +3,13 @@
 namespace App\GraphQL\Types;
 
 use GraphQL\Type\Definition\Type;
-use App\Contracts\GraphQL\Type as IType;
 use GraphQL\Type\Definition\ObjectType;
 
-class CategoryType implements IType
+class CategoryType extends ObjectType
 {
-    public static function define(): ObjectType
+    public function __construct()
     {
-        return new ObjectType([
+        parent::__construct([
             'name' => 'Category',
             'fields' => [
                 'name' => Type::string(),

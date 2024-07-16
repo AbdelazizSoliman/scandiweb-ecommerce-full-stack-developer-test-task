@@ -3,18 +3,17 @@
 namespace App\GraphQL\Types;
 
 use GraphQL\Type\Definition\Type;
-use App\Contracts\GraphQL\Type as IType;
 use GraphQL\Type\Definition\ObjectType;
 
-class PriceType implements IType
+class PriceType extends ObjectType
 {
-    public static function define(): ObjectType
+    public function __construct()
     {
-        return new ObjectType([
+        parent::__construct([
             'name' => 'Price',
             'fields' => [
-                'amount' => Type::float(),
-                'currency' => CurrencyType::define(),
+                'amount' => Type::string(),
+                'currency' => new CurrencyType(),
             ],
         ]);
     }
