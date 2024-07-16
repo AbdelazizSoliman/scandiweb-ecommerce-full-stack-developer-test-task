@@ -9,8 +9,8 @@ export const getCategoriesQuery = gql`
 `;
 
 export const getProductsQuery = gql`
-  query {
-    products {
+  query ($category: String) {
+    products(category: $category) {
       id
       name
       inStock
