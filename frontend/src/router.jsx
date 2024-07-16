@@ -1,4 +1,4 @@
-import { Categories, ErrorScreen, HomeLayout, ProductDetail } from './pages';
+import { Products, ErrorScreen, HomeLayout, ProductDetail } from './pages';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -9,7 +9,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Categories />,
+        element: <Products />,
       },
       {
         path: 'products/:id',

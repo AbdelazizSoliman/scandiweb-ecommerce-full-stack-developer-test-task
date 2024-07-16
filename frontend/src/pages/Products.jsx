@@ -1,7 +1,7 @@
 import { ProductCard, Spinner } from '../components';
 import { useDataContext } from '../DataContext';
 
-function Categories() {
+function Products() {
   const { selectedCategory, productsData } = useDataContext();
 
   return (
@@ -21,4 +21,4 @@ function Categories() {
   );
 }
 
-export default Categories;
+export default Products;
