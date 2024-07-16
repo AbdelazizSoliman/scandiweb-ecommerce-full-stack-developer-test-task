@@ -52,7 +52,7 @@ class ProductsResolver implements Resolver
         $productPrices = [];
         foreach ($prices as $price) {
             $productPrices[] = [
-                'amount' => $price['amount'],
+                'amount' => number_format($price['amount'], 2, thousands_separator: ''),
                 'currency' => [
                     'label' => $price['label'],
                     'symbol' => $price['symbol'],
