@@ -22,21 +22,23 @@ const ProductAttributes = ({
         ).toFixed(2)}`
       : null;
 
-  const handleAttributeClick = (attributeSetId, attribute) => {
+  const handleAttributeClick = (attribute) => {
     const existingIndex = selectedAttributes.findIndex(
-      (attr) => attr.id === attributeSetId
+      (attr) => attr.attributeId === attribute.attribute_id
     );
 
     const updatedSelectedAttributes = [...selectedAttributes];
 
     if (existingIndex !== -1) {
       updatedSelectedAttributes[existingIndex] = {
-        id: attributeSetId,
+        id: attribute.id,
+        attributeId: attribute.attribute_id,
         value: attribute.value,
       };
     } else {
       updatedSelectedAttributes.push({
-        id: attributeSetId,
+        id: attribute.id,
+        attributeId: attribute.attribute_id,
         value: attribute.value,
       });
     }
@@ -48,9 +50,11 @@ const ProductAttributes = ({
     }
   };
 
-  const isAttributeValueSelected = (attributeSetId, attribute) => {
+  const isAttributeValueSelected = (attribute) => {
     return selectedAttributes.some(
-      (attr) => attr.id === attributeSetId && attr.value === attribute.value
+      (attr) =>
+        attribute.attribute_id === attr.attributeId &&
+        attribute.value === attr.value
     );
   };
 
@@ -71,7 +75,7 @@ const ProductAttributes = ({
               isModalView ? 'font-sm' : 'font-bold uppercase'
             } capitalize mb-1`}
           >
-            {attributeSet.id}:
+            {attributeSet.name}:
           </h3>
 
           <div
@@ -80,38 +84,36 @@ const ProductAttributes = ({
             } flex flex-wrap gap-y-2`}
           >
             {attributeSet.items.map((attribute) =>
-              attributeSet.id.toLowerCase() === 'color' ? (
+              attributeSet.type?.toLowerCase() === 'swatch' &&
+              attributeSet.name?.toLowerCase() === 'color' ? (
                 <button
                   type="button"
-                  key={attributeSet.id + attribute.value}
+                  key={attribute.id}
                   className={`relative ${isModalView ? 'w-5 h-5' : 'w-8 h-8'} ${
-                    isAttributeValueSelected(attributeSet.id, attribute)
+                    isAttributeValueSelected(attribute)
                       ? 'border-primary'
                       : 'border-white'
                   } border transition-colors hover:border-primary`}
                   style={{ backgroundColor: attribute.value }}
-                  onClick={() =>
-                    handleAttributeClick(attributeSet.id, attribute)
-                  }
+                  title={attribute.displayValue}
+                  onClick={() => handleAttributeClick(attribute)}
                 >
                   <div className="absolute inset-0 border border-gray-200"></div>
                 </button>
               ) : (
                 <button
                   type="button"
-                  key={attributeSet.id + attribute.value}
+                  key={attribute.id}
                   className={`${
                     isModalView
                       ? 'min:w-6 min:h-6 text-sm'
                       : 'min:w-20 min:h-10'
                   } ${
-                    isAttributeValueSelected(attributeSet.id, attribute)
+                    isAttributeValueSelected(attribute)
                       ? 'bg-text text-white'
                       : 'bg-white'
                   } px-1 flex items-center justify-center transition-colors border border-gray-800 hover:bg-gray-800 hover:text-white`}
-                  onClick={() =>
-                    handleAttributeClick(attributeSet.id, attribute)
-                  }
+                  onClick={() => handleAttributeClick(attribute)}
                 >
                   {attribute.displayValue}
                 </button>
