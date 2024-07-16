@@ -1,25 +1,24 @@
-import { Component } from 'react';
-import { ProductCard } from '../components';
+import { ProductCard, Spinner } from '../components';
+import { useDataContext } from '../DataContext';
 
-class Categories extends Component {
-  render() {
-    return (
-      <main className="mt-14">
-        <h1 className="heading-h1 !mb-16">Women</h1>
+function Categories() {
+  const { selectedCategory, productsData } = useDataContext();
 
+  return (
+    <main className="mt-14">
+      <h1 className="heading-h1 !mb-16 !uppercase">{selectedCategory}</h1>
+
+      {!productsData.length ? (
+        <Spinner />
+      ) : (
         <section className="flex flex-wrap -mx-2 gap-y-8">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {productsData.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </section>
-      </main>
-    );
-  }
+      )}
+    </main>
+  );
 }
 
 export default Categories;
