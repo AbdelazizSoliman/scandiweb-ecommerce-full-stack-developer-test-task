@@ -25,7 +25,10 @@ class Query
                 ],
                 'products' => [
                     'type' => Type::listOf(Types\ProductType::define()),
-                    'resolve' => static fn () => Resolvers\ProductsResolver::index(),
+                    'args' => [
+                        'category' => ['type' => Type::string()],
+                    ],
+                    'resolve' => static fn ($rootValue, array $args) => Resolvers\ProductsResolver::index($args['category'] ?? null),
                 ],
                 'product' => [
                     'type' => Types\ProductType::define(),
