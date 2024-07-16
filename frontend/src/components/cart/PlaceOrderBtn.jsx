@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { useMutation } from '@apollo/client';
-import { PLACE_ORDER } from '../../graphql/mutations';
+import { PLACE_ORDER } from '../../GraphQl/mutations';
 import { Spinner } from '../';
 import { useDataContext } from '../../DataContext';
 
