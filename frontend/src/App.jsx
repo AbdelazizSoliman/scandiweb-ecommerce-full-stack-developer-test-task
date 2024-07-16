@@ -2,7 +2,7 @@ import { Component, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import router from './router';
-import { getCategoriesQuery, getProductsQuery } from './graphql/queries';
+import { getCategoriesQuery, getProductsQuery } from './GraphQl/Queries';
 import { DataProvider, useDataContext } from './DataContext';
 import { Loading } from './components';
 

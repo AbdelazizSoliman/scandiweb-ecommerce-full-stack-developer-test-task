@@ -14,10 +14,8 @@ function NavigationMenu() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const category = params.get('categories');
-    if (category) {
-      setSelectedCategory(category);
-    }
+    const category = params.get('category');
+    setSelectedCategory(category ?? 'all');
   }, [location.search, setSelectedCategory]);
 
   return (
@@ -29,8 +27,8 @@ function NavigationMenu() {
           return (
             <li key={category}>
               <Link
-                to={`?categories=${category}`}
-                className={`pb-4 border-b-2 ${
+                to={`/?category=${category}`}
+                className={`block pb-4 border-b-2 ${
                   isSelected
                     ? 'nav-active'
                     : 'border-transparent hover:text-primary'
