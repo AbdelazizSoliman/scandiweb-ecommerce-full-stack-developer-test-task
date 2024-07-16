@@ -167,6 +167,7 @@ const ProductAttributes = ({
           type="button"
           className="w-full mb-8 btn-cta"
           onClick={() => addToCart(product, true, selectedAttributes)}
+          disabled={product.attributes.length !== selectedAttributes.length}
           data-testid="add-to-cart"
         >
           Add to Cart

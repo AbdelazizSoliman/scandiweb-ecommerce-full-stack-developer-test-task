@@ -3,22 +3,21 @@
 @tailwind utilities;
 
 .cta {
-    @apply text-white transition-colors duration-200 ease-out bg-primary hover:bg-accent;
+  @apply text-white transition-colors duration-200 ease-out bg-primary hover:bg-accent;
 }
-  
-  .text-heading {
-    @apply px-10 py-3 uppercase cta;
+
+.btn-cta {
+  @apply px-10 py-3 uppercase disabled:opacity-70 cta;
 }
 
 .heading-h1 {
-    @apply mb-6 text-3xl font-semibold capitalize;
-  }
-  
-  .heading-h2 {
-    @apply mb-4 text-2xl font-bold;
-  }
-  
-  .nav-active {
-    @apply font-semibold transition-colors duration-200 border-primary text-primary;
-  }
-  
+  @apply mb-6 text-3xl font-semibold capitalize;
+}
+
+.heading-h2 {
+  @apply mb-4 text-2xl font-bold;
+}
+
+.nav-active {
+  @apply font-semibold transition-colors duration-200 border-primary text-primary;
+}
