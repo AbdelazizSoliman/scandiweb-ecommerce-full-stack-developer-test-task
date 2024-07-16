@@ -1,20 +1,31 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useDataContext } from '../DataContext';
 import { useEffect, useState } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import { getProductsQuery } from '../GraphQl/Queries';
 
 function NavigationMenu() {
   const location = useLocation();
-  const { categoriesData, selectedCategory, setSelectedCategory } =
-    useDataContext();
   const [categories, setCategories] = useState([]);
+
+  const {
+    categoriesData,
+    selectedCategory,
+    setSelectedCategory,
+    setProductsData,
+  } = useDataContext();
+
+  const [fetchProducts] = useLazyQuery(getProductsQuery, {
+    onCompleted: (data) => setProductsData(data.products),
+  });
 
   useEffect(() => {
     setCategories(categoriesData.map((category) => category.name));
   }, [categoriesData]);
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const category = params.get('category');
+    const category = new URLSearchParams(location.search).get('category');
+
     setSelectedCategory(category ?? 'all');
   }, [location.search, setSelectedCategory]);
 
@@ -33,6 +44,7 @@ function NavigationMenu() {
                     ? 'nav-active'
                     : 'border-transparent hover:text-primary'
                 }`}
+                onClick={() => fetchProducts({ variables: { category } })}
               >
                 {category}
               </Link>

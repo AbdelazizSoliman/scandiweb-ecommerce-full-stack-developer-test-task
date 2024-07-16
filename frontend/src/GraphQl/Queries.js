@@ -8,33 +8,37 @@ export const getCategoriesQuery = gql`
   }
 `;
 
+const getProductFields = `
+  id
+  name
+  inStock
+  gallery
+  description
+  brand
+  prices {
+    amount
+    currency {
+      label
+      symbol
+    }
+  }
+  category
+  attributes {
+    id
+    name
+    type
+    items {
+      id
+      value
+      displayValue
+    }
+  }
+`;
+
 export const getProductsQuery = gql`
   query ($category: String) {
     products(category: $category) {
-      id
-      name
-      inStock
-      gallery
-      description
-      brand
-      prices {
-        amount
-        currency {
-          label
-          symbol
-        }
-      }
-      category
-      attributes {
-        id
-        name
-        type
-        items {
-          id
-          value
-          displayValue
-        }
-      }
+      ${getProductFields}
     }
   }
 `;
@@ -42,30 +46,18 @@ export const getProductsQuery = gql`
 export const getProductQuery = gql`
   query ($id: String!) {
     product(id: $id) {
-      id
+      ${getProductFields}
+    }
+  }
+`;
+
+export const getCategoriesAndProductsQuery = gql`
+  query getCategoriesAndProducts($category: String) {
+    categories {
       name
-      inStock
-      gallery
-      description
-      brand
-      prices {
-        amount
-        currency {
-          label
-          symbol
-        }
-      }
-      category
-      attributes {
-        id
-        name
-        type
-        items {
-          id
-          value
-          displayValue
-        }
-      }
+    }
+    products(category: $category) {
+      ${getProductFields}
     }
   }
 `;

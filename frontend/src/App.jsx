@@ -2,7 +2,7 @@ import { Component, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import router from './router';
-import { getCategoriesQuery, getProductsQuery } from './GraphQl/Queries';
+import { getCategoriesAndProductsQuery } from './GraphQl/Queries';
 import { DataProvider, useDataContext } from './DataContext';
 import { Loading } from './components';
 
@@ -18,29 +18,25 @@ class App extends Component {
 }
 
 function FetchData() {
-  const { setCategoriesData, setProductsData, selectedCategory } =
-    useDataContext();
+  const { setCategoriesData, setProductsData } = useDataContext();
 
-  const [
-    fetchCategories,
-    { loading: categoriesLoading, error: categoriesError },
-  ] = useLazyQuery(getCategoriesQuery, {
-    onCompleted: (data) => setCategoriesData(data.categories),
-  });
-
-  const [fetchProducts, { loading: productsLoading, error: productsError }] =
-    useLazyQuery(getProductsQuery, {
-      onCompleted: (data) => setProductsData(data.products),
-    });
+  const [fetchData, { loading, error }] = useLazyQuery(
+    getCategoriesAndProductsQuery,
+    {
+      onCompleted: (data) => {
+        setCategoriesData(data.categories);
+        setProductsData(data.products);
+      },
+    }
+  );
 
   useEffect(() => {
     const category = new URLSearchParams(location.search).get('category');
 
-    fetchCategories();
-    fetchProducts({ variables: { category } });
-  }, [fetchCategories, fetchProducts, selectedCategory]);
+    fetchData({ variables: { category } });
+  }, [fetchData]);
 
-  if (categoriesError || productsError) {
+  if (error) {
     return (
       <p className="my-8 font-semibold text-center text-red-500">
         Something went wrong
@@ -48,7 +44,7 @@ function FetchData() {
     );
   }
 
-  if (categoriesLoading || productsLoading) {
+  if (loading) {
     return <Loading />;
   }
 
