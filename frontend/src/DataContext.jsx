@@ -66,7 +66,7 @@ export const DataProvider = ({ children }) => {
         selectedAttributes: attributes,
         quantity: 1,
       };
-      existingCartItems.push(newItem);
+      existingCartItems.unshift(newItem);
     }
 
     // Update cart items and persist in localStorage
