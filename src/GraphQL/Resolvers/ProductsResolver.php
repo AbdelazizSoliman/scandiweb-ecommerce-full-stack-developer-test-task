@@ -101,7 +101,8 @@ class ProductsResolver
             // If attribute not yet added, initialize it
             if (!isset($attributes[$attributeId])) {
                 $attributes[$attributeId] = [
-                    'id' => $attributeId,
+                    'id' => $item['id'],
+                    'attribute_id' => $attributeId,
                     'name' => $item['attribute_name'],
                     'type' => $item['attribute_type'],
                     'items' => [],
@@ -111,6 +112,7 @@ class ProductsResolver
             // Append item details to the attribute's items
             $attributes[$attributeId]['items'][] = [
                 'id' => $item['id'],
+                'attribute_id' => $attributeId,
                 'value' => $item['value'],
                 'displayValue' => $item['displayValue'],
             ];
