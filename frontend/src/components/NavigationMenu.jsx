@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDataContext } from '../DataContext';
 import { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { GET_PRODUCTS } from '../GraphQl/Queries';
+import { GET_PRODUCTS } from '../graphql/queries';
 
 function NavigationMenu() {
   const location = useLocation();
@@ -21,13 +21,11 @@ function NavigationMenu() {
 
   useEffect(() => {
     setCategories(categoriesData.map((category) => category.name));
-  }, [categoriesData]);
 
-  useEffect(() => {
     const category = new URLSearchParams(location.search).get('category');
-    setSelectedCategory(category ?? 'all');
+    setSelectedCategory(category ?? categoriesData[0]?.name);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [categoriesData]);
 
   const handleCategoryChange = (category) => {
     fetchProducts({ variables: { category } });
