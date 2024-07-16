@@ -30,7 +30,11 @@ class ProductImageCarousel extends Component {
   }
 
   handleMainImageLoad(e) {
-    const mainImageHeight = e.target.clientHeight;
+    const { clientHeight } = e.target;
+    const maxHeightRatio = 0.7;
+    const maxHeight = window.innerHeight * maxHeightRatio;
+    const mainImageHeight = Math.min(clientHeight, maxHeight);
+
     this.setState({ mainImageHeight });
   }
 
@@ -62,8 +66,9 @@ class ProductImageCarousel extends Component {
               <img
                 src={images[currentIndex]}
                 alt={alt}
-                className="object-contain w-full h-auto max-h-screen"
+                className="object-contain w-full h-auto"
                 onLoad={this.handleMainImageLoad}
+                style={{ maxHeight: mainImageHeight || '100vh' }}
               />
 
               <button
