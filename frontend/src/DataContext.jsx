@@ -116,6 +116,11 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const emptyCart = () => {
+    localStorage.removeItem('cartItems');
+    setCartItems([]);
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -129,6 +134,7 @@ export const DataProvider = ({ children }) => {
         cartItems,
         updateCartItemQuantity,
         updateCartItemAttribute,
+        emptyCart,
       }}
     >
       {children}
