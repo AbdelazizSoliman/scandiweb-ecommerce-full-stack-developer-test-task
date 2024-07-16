@@ -17,7 +17,9 @@ const ProductAttributes = ({
 
   const totalPrice =
     product.prices && product.prices.length > 0
-      ? parseFloat(product.prices[0]?.amount) * (product.quantity ?? 1)
+      ? `${product.prices[0].currency.symbol}${(
+          parseFloat(product.prices[0]?.amount) * (product.quantity ?? 1)
+        ).toFixed(2)}`
       : null;
 
   const handleAttributeClick = (attributeSetId, attribute) => {
@@ -95,7 +97,7 @@ const ProductAttributes = ({
                     handleAttributeClick(attributeSet.id, attribute)
                   }
                 >
-                  <div className="absolute inset-0 border border-white"></div>
+                  <div className="absolute inset-0 border border-gray-200"></div>
                 </button>
               ) : (
                 <button
