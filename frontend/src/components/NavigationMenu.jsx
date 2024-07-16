@@ -25,9 +25,14 @@ function NavigationMenu() {
 
   useEffect(() => {
     const category = new URLSearchParams(location.search).get('category');
-
     setSelectedCategory(category ?? 'all');
-  }, [location.search, setSelectedCategory]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleCategoryChange = (category) => {
+    fetchProducts({ variables: { category } });
+    setSelectedCategory(category);
+  };
 
   return (
     <nav className="z-10">
@@ -44,7 +49,7 @@ function NavigationMenu() {
                     ? 'nav-active'
                     : 'border-transparent hover:text-primary'
                 }`}
-                onClick={() => fetchProducts({ variables: { category } })}
+                onClick={() => handleCategoryChange(category)}
               >
                 {category}
               </Link>
