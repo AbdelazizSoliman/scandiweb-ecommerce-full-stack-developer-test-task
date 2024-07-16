@@ -13,6 +13,9 @@ export default {
         text: 'hsl(216, 8%, 12%)',
         muted: 'hsla(231, 6%, 58%, 1)',
       },
+      gridTemplateColumns: {
+        'auto-fill-350': 'repeat(auto-fill, minmax(21.875rem, 1fr))',
+      },
     },
   },
   plugins: [],

@@ -9,7 +9,6 @@ function ProductCard({ product = {} }) {
 
   return (
     <article
-      className="w-full px-4 sm:w-1/2 md:w-1/3 lg:w-1/4"
       data-testid={`cart-item-attribute-${product.name
         .replace(/\s+/g, '-')
         .toLowerCase()}`}
@@ -17,12 +16,12 @@ function ProductCard({ product = {} }) {
       <div className="p-4 overflow-hidden transition-shadow duration-500 hover:shadow-xl group">
         <div className="relative mb-6">
           <Link to={`/products/${product.id}`}>
-            <div className="relative min-h-52">
+            <div className="relative">
               <img
                 src={product.gallery[0] ?? searchingImg}
                 alt={product.name}
                 loading="lazy"
-                className="object-cover w-full h-auto"
+                className="object-contain w-full min-h-64 max-h-96"
               />
               {!product.inStock && (
                 <div className="absolute inset-0 flex items-center justify-center px-2 py-1 text-2xl uppercase bg-white bg-opacity-70 text-muted">
