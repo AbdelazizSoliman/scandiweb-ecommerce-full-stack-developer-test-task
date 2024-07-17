@@ -43,7 +43,7 @@ class Database
         return $this->statement->fetch();
     }
 
-    public function findOrFail()
+    public function fetchOrFail()
     {
         $result = $this->fetch();
 
