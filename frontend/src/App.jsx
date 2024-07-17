@@ -1,54 +1,16 @@
-import { Component, useEffect } from 'react';
+import { Component } from 'react';
 import { RouterProvider } from 'react-router-dom';
-import { useLazyQuery } from '@apollo/client';
 import router from './router';
-import { GET_CATEGORIES_AND_PRODUCTS } from './GraphQl/Queries';
-import { DataProvider, useDataContext } from './DataContext';
-import { Loading } from './components';
+import { DataProvider } from './DataContext';
 
 class App extends Component {
   render() {
     return (
       <DataProvider>
-        <FetchData />
         <RouterProvider router={router} />
       </DataProvider>
     );
   }
-}
-
-function FetchData() {
-  const { setCategoriesData, setProductsData } = useDataContext();
-
-  const [fetchData, { loading, error }] = useLazyQuery(
-    GET_CATEGORIES_AND_PRODUCTS,
-    {
-      onCompleted: (data) => {
-        setCategoriesData(data.categories);
-        setProductsData(data.products);
-      },
-    }
-  );
-
-  useEffect(() => {
-    const category = new URLSearchParams(location.search).get('category');
-
-    fetchData({ variables: { category } });
-  }, [fetchData]);
-
-  if (error) {
-    return (
-      <p className="my-8 font-semibold text-center text-red-500">
-        Something went wrong
-      </p>
-    );
-  }
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  return null;
 }
 
 export default App;

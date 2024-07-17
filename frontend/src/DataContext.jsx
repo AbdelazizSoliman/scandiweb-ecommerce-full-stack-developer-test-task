@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-  const [categoriesData, setCategoriesData] = useState([]);
   const [productsData, setProductsData] = useState([]);
   const [cartItems, setCartItems] = useState(
     JSON.parse(localStorage.getItem('cartItems')) || []
@@ -90,6 +89,7 @@ export const DataProvider = ({ children }) => {
     );
 
     const existingCartItems = [...cartItems];
+    // update the cart item if no duplicate item is found with the same attributes
     if (duplicateItemIndex === -1) {
       const updatedCartItem = {
         ...cartItems[itemIndex],
@@ -99,13 +99,16 @@ export const DataProvider = ({ children }) => {
       existingCartItems[itemIndex] = updatedCartItem;
 
       toast.success('Cart item updated successfully!');
-    } else {
+    }
+    // merge the quantities of duplicate items if they have different attributes
+    else if (itemIndex !== duplicateItemIndex) {
       existingCartItems[itemIndex].quantity +=
         existingCartItems[duplicateItemIndex].quantity;
 
+      // remove the duplicate item from the cart
       existingCartItems.splice(duplicateItemIndex, 1);
 
-      toast.success('Item successfully merged with existing cart item!');
+      toast.success('Cart item quantities merged successfully!');
     }
 
     setCartItems(existingCartItems);
@@ -142,8 +145,6 @@ export const DataProvider = ({ children }) => {
   return (
     <DataContext.Provider
       value={{
-        categoriesData,
-        setCategoriesData,
         productsData,
         setProductsData,
         selectedCategory,
