@@ -78,7 +78,7 @@ const ProductAttributes = ({
           className="mt-4"
           data-testid={`${
             isModalView ? 'cart-item' : 'product'
-          }-attribute-${attributeSet.name.replace(/\s+/g, '-').toLowerCase()}`}
+          }-attribute-${attributeSet.name.replace(/\s+/g, '-')}`}
         >
           <h3
             className={`${
@@ -112,12 +112,14 @@ const ProductAttributes = ({
                   disabled={!product.inStock}
                   data-testid={`${
                     isModalView ? 'cart-item' : 'product'
-                  }-attribute-${attributeSet.name
-                    .replace(/\s+/g, '-')
-                    .toLowerCase()}-${attribute.displayValue
-                    .replace(/\s+/g, '-')
-                    .toLowerCase()}${
-                    isAttributeValueSelected(attribute) ? '-selected' : ''
+                  }-attribute-${attributeSet.name.replace(/\s+/g, '-')}-${
+                    isModalView
+                      ? attribute.displayValue.replace(/\s+/g, '-')
+                      : attribute.value
+                  }${
+                    isAttributeValueSelected(attribute) && isModalView
+                      ? '-selected'
+                      : ''
                   }`}
                 >
                   <div className="absolute inset-0 border border-gray-200"></div>
@@ -141,11 +143,10 @@ const ProductAttributes = ({
                   onClick={() => handleAttributeClick(attribute)}
                   data-testid={`${
                     isModalView ? 'cart-item' : 'product'
-                  }-attribute-${attributeSet.name
-                    .replace(/\s+/g, '-')
-                    .toLowerCase()}-${attribute.displayValue
-                    .replace(/\s+/g, '-')
-                    .toLowerCase()}${
+                  }-attribute-${attributeSet.name.replace(
+                    /\s+/g,
+                    '-'
+                  )}-${attribute.displayValue.replace(/\s+/g, '-')}${
                     isAttributeValueSelected(attribute) ? '-selected' : ''
                   }`}
                 >

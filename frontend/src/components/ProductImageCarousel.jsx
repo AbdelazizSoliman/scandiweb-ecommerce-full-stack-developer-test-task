@@ -31,7 +31,7 @@ class ProductImageCarousel extends Component {
 
   handleMainImageLoad(e) {
     const { clientHeight } = e.target;
-    const maxHeightRatio = 0.7;
+    const maxHeightRatio = 0.6;
     const maxHeight = window.innerHeight * maxHeightRatio;
     const mainImageHeight = Math.min(clientHeight, maxHeight);
 

@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ApolloProvider client={apolloClient}>
       <App />
       <ToastContainer
-        position="bottom-right"
+        position="bottom-left"
         transition={Slide}
         autoClose={2000}
         hideProgressBar={true}

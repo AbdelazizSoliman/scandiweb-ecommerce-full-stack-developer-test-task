@@ -8,14 +8,15 @@ function ProductCard({ product = {} }) {
   const { addToCart } = useDataContext();
 
   return (
-    <article
-      data-testid={`cart-item-attribute-${product.name
-        .replace(/\s+/g, '-')
-        .toLowerCase()}`}
-    >
+    <article>
       <div className="p-4 overflow-hidden transition-shadow duration-500 hover:shadow-xl group">
         <div className="relative mb-6">
-          <Link to={`/products/${product.id}`}>
+          <Link
+            to={`/products/${product.id}`}
+            data-testid={`product-${product.name
+              .replace(/\s+/g, '-')
+              .toLowerCase()}`}
+          >
             <div className="relative">
               <img
                 src={product.gallery[0] ?? searchingImg}

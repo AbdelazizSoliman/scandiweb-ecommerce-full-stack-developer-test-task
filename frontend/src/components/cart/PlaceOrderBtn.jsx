@@ -63,6 +63,7 @@ function PlaceOrderBtn({ className }) {
       }`}
       onClick={handlePlaceOrder}
       disabled={loading}
+      data-testid="place-order-btn"
     >
       {loading && <Spinner className="w-4 h-4 mr-2" />}
       Place Order

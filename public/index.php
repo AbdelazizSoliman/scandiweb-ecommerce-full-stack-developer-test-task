@@ -29,7 +29,14 @@ $routeInfo = $dispatcher->dispatch(
 
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
+        if (preg_match('/\.(?:css|js|png|jpg|jpeg|gif|ico)$/', $_SERVER['REQUEST_URI'])) {
+            setMimeType($_SERVER['REQUEST_URI']);
+            readfile(base_path('public' . $_SERVER['REQUEST_URI']));
+            exit;
+        }
+
         require(base_path('public/index.html'));
+
         // ... 404 Not Found
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
@@ -41,4 +48,25 @@ switch ($routeInfo[0]) {
         $vars = $routeInfo[2];
         echo $handler($vars);
         break;
+}
+
+function setMimeType($filename)
+{
+    $mime_types = [
+        'css' => 'text/css',
+        'js' => 'application/javascript',
+        'png' => 'image/png',
+        'jpg' => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'gif' => 'image/gif',
+        'ico' => 'image/x-icon',
+    ];
+
+    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+    if (array_key_exists($ext, $mime_types)) {
+        header('Content-Type: ' . $mime_types[$ext]);
+    } else {
+        header('Content-Type: application/octet-stream');
+    }
 }
