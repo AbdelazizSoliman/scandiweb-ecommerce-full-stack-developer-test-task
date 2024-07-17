@@ -29,6 +29,7 @@ $routeInfo = $dispatcher->dispatch(
 
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
+        require(base_path('public/index.html'));
         // ... 404 Not Found
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
