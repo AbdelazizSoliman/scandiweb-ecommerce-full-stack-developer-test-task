@@ -1,3 +1,4 @@
-RewriteEngine on
-RewriteRule .* /public/$0 [L]
-DirectoryIndex index.php
+Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ public/index.php [QSA,L]
