@@ -17,7 +17,7 @@ const ProductAttributes = ({
 
   const totalPrice =
     product.prices && product.prices.length > 0
-      ? `${product.prices[0].currency.symbol}${(
+      ? `${product.prices[0].currency.symbol} ${(
           parseFloat(product.prices[0]?.amount) * (product.quantity ?? 1)
         ).toFixed(2)}`
       : null;
@@ -163,7 +163,7 @@ const ProductAttributes = ({
           <div className="heading-h2">
             {product.prices &&
               product.prices.length > 0 &&
-              `${product.prices[0]?.currency.symbol}${product.prices[0]?.amount}`}
+              `${product.prices[0]?.currency.symbol} ${product.prices[0]?.amount}`}
           </div>
         </>
       )}

@@ -37,7 +37,7 @@ function CartModal({ cartItems = [] }) {
             <div className="flex items-center justify-between">
               <h3 className="font-semibold font-roboto">Total</h3>
               <div className="font-bold" data-testid="cart-total">
-                {`${cartItems[0]?.product.prices[0].currency.symbol}${totalPrice}`}
+                {`${cartItems[0]?.product.prices[0].currency.symbol} ${totalPrice}`}
               </div>
             </div>
 
