@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDataContext } from '../DataContext';
 import { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { GET_PRODUCTS } from '../graphql/queries';
+import { GET_PRODUCTS } from '../GraphQl/Queries';
 
 function NavigationMenu() {
   const location = useLocation();
