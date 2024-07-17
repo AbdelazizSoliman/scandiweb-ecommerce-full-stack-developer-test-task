@@ -1,24 +1,53 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useLazyQuery } from '@apollo/client';
 import { Cart, CartModal, Logo, NavigationMenu } from '.';
 import { useDataContext } from '../DataContext';
+import { GET_PRODUCTS } from '../GraphQl/Queries';
 
 const Header = () => {
+  const { category } = useParams();
+  const { cartItems, setSelectedCategory, setProductsData, categoriesData } =
+    useDataContext();
+
   const [showModal, setShowModal] = useState(false);
-  const { cartItems } = useDataContext();
+  const [categories, setCategories] = useState([]);
 
   const toggleModal = () => setShowModal((prevState) => !prevState);
+
+  const [fetchProducts] = useLazyQuery(GET_PRODUCTS, {
+    onCompleted: (data) => setProductsData(data.products),
+  });
+
+  const handleCategoryChange = (category) => {
+    fetchProducts({ variables: { category } });
+    setSelectedCategory(category);
+  };
 
   useEffect(() => {
     document.body.style.overflowY = showModal ? 'hidden' : 'auto';
   }, [showModal]);
 
+  useEffect(() => {
+    setCategories(categoriesData.map((category) => category.name));
+
+    // const category = new URLSearchParams(location.search).get('category');
+    setSelectedCategory(category ?? categoriesData[0]?.name);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoriesData]);
+
   return (
     <header className="relative z-10 flex items-center justify-between">
-      <NavigationMenu />
+      <NavigationMenu
+        categories={categories}
+        handleCategoryChange={handleCategoryChange}
+      />
 
       <div className="absolute inset-x-0 flex items-center justify-center mx-auto">
-        <Link to="/">
+        <Link
+          to="/"
+          onClick={() => handleCategoryChange(categoriesData[0]?.name)}
+        >
           <Logo />
         </Link>
       </div>

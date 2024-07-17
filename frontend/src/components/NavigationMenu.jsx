@@ -1,36 +1,9 @@
-import { Link, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { useDataContext } from '../DataContext';
-import { useEffect, useState } from 'react';
-import { useLazyQuery } from '@apollo/client';
-import { GET_PRODUCTS } from '../GraphQl/Queries';
 
-function NavigationMenu() {
-  const location = useLocation();
-  const [categories, setCategories] = useState([]);
-
-  const {
-    categoriesData,
-    selectedCategory,
-    setSelectedCategory,
-    setProductsData,
-  } = useDataContext();
-
-  const [fetchProducts] = useLazyQuery(GET_PRODUCTS, {
-    onCompleted: (data) => setProductsData(data.products),
-  });
-
-  useEffect(() => {
-    setCategories(categoriesData.map((category) => category.name));
-
-    const category = new URLSearchParams(location.search).get('category');
-    setSelectedCategory(category ?? categoriesData[0]?.name);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categoriesData]);
-
-  const handleCategoryChange = (category) => {
-    fetchProducts({ variables: { category } });
-    setSelectedCategory(category);
-  };
+function NavigationMenu({ categories, handleCategoryChange }) {
+  const { selectedCategory } = useDataContext();
 
   return (
     <nav className="z-10">
@@ -41,7 +14,8 @@ function NavigationMenu() {
           return (
             <li key={category}>
               <Link
-                to={`/?category=${category}`}
+                // to={`/?category=${category}`}
+                to={`/${category}`}
                 className={`block pb-4 border-b-2 ${
                   isSelected
                     ? 'nav-active'
@@ -61,5 +35,10 @@ function NavigationMenu() {
     </nav>
   );
 }
+
+NavigationMenu.propTypes = {
+  categories: PropTypes.array,
+  handleCategoryChange: PropTypes.func,
+};
 
 export default NavigationMenu;
