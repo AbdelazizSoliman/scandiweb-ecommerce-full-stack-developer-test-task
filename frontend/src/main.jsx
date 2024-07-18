@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './assets/index.css';
 
 const graphqlEndpoint = import.meta.env.PROD
-  ? 'https://ecommerce-scandiweb-3bbe6b47ff8a.herokuapp.com//graphql'
+  ? 'https://frontend-f55rnys5z-abdelazizsolimans-projects.vercel.app/graphql'
   : 'http://localhost:8000/graphql';
 
 const apolloClient = new ApolloClient({
