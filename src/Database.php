@@ -12,7 +12,7 @@ class Database
     public function __construct()
     {
         $dbConfig = require base_path('src/config/database.php') ?? [];
-        $dsn = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};dbname={$dbConfig['dbname']};charset={$dbConfig['charset']}";
+        $dsn = 'mysql:' . http_build_query($dbConfig, arg_separator: ';');
 
         try {
             $this->connection = new PDO($dsn, options: [
