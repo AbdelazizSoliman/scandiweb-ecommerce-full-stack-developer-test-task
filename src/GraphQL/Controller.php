@@ -26,9 +26,12 @@ class Controller
 
             $output = self::executeQuery($schema);
         } catch (Throwable $e) {
+            // Log the error
+            error_log('Error: ' . $e->getMessage());
+
             $output = [
                 'error' => [
-                    'message' => $e->getMessage(),
+                    'message' => 'An unexpected error occurred. Please try again later.',
                 ],
             ];
         }
@@ -45,11 +48,20 @@ class Controller
         }
 
         $input = json_decode($rawInput, true);
-        $query = $input['query'];
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new RuntimeException('Invalid JSON input');
+        }
+
+        $query = $input['query'] ?? null;
         $variableValues = $input['variables'] ?? null;
+
+        if (empty($query)) {
+            throw new RuntimeException('No query provided');
+        }
 
         $rootValue = ['prefix' => 'You said: '];
         $result = GraphQLBase::executeQuery($schema, $query, $rootValue, null, $variableValues);
+
         return $result->toArray();
     }
 }
