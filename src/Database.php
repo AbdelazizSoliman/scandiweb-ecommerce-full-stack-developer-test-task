@@ -77,4 +77,9 @@ class Database
     {
         return $this->connection->rollBack();
     }
+
+    public function closeConnection()
+    {
+        $this->connection = null;
+    }
 }

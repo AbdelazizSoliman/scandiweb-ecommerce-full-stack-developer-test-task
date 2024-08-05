@@ -52,6 +52,7 @@ class OrdersResolver
             return "Order placed successfully! Order ID: $orderId";
         } catch (\Exception $e) {
             $db->rollback();
+            $db->closeConnection();
             throw $e;
         }
     }
