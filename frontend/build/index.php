@@ -31,7 +31,7 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         if (preg_match('/\.(?:css|js|png|jpg|jpeg|gif|ico)$/', $_SERVER['REQUEST_URI'])) {
             setMimeType($_SERVER['REQUEST_URI']);
-            readfile(base_path('public' . $_SERVER['REQUEST_URI']));
+            readfile(base_path('frontend/build' . $_SERVER['REQUEST_URI']));
             exit;
         }
 
