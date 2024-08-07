@@ -10,7 +10,7 @@
     }
   },
   "scripts": {
-    "start": "php -S localhost:8000 -t build"
+    "start": "php -S localhost:8000 -t frontend/build"
   },
   "require": {
     "nikic/fast-route": "^1.3",
