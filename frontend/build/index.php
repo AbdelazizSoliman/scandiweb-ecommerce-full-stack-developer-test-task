@@ -35,7 +35,7 @@ switch ($routeInfo[0]) {
             exit;
         }
 
-        require(base_path('public/index.html'));
+        require(base_path('frontend/build/index.html'));
 
         // ... 404 Not Found
         break;
