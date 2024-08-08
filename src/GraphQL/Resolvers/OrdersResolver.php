@@ -48,7 +48,6 @@ class OrdersResolver
             }
 
             $db->commit();
-
             return "Order placed successfully! Order ID: $orderId";
         } catch (\Exception $e) {
             $db->rollback();

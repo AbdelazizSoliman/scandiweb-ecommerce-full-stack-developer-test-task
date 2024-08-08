@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './assets/index.css';
 
 const graphqlEndpoint = import.meta.env.PROD
-  ? '/graphql'
+  ? import.meta.env.VITE_GRAPHQL_ENDPOINT || '/graphql'
   : 'http://localhost:8000/graphql';
 
 const apolloClient = new ApolloClient({
