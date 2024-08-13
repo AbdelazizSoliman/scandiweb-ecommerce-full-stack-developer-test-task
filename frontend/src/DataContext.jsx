@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { createContext, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
-const DataContext = createContext();
+export const DataContext = createContext(); 
 
 export const DataProvider = ({ children }) => {
   const [productsData, setProductsData] = useState([]);
