@@ -18,8 +18,8 @@ const ProductAttributes = ({
   const totalPrice =
     product.prices && product.prices.length > 0
       ? `${product.prices[0].currency.symbol} ${(
-          parseFloat(product.prices[0]?.amount) * (product.quantity ?? 1)
-        ).toFixed(2)}`
+        parseFloat(product.prices[0]?.amount) * (product.quantity ?? 1)
+      ).toFixed(2)}`
       : null;
 
   const handleAttributeClick = (attribute) => {
@@ -76,84 +76,74 @@ const ProductAttributes = ({
         <div
           key={attributeSet.id}
           className="mt-4"
-          data-testid={`${
-            isModalView ? 'cart-item' : 'product'
-          }-attribute-${attributeSet.name.replace(/\s+/g, '-')}`}
+          data-testid={`${isModalView ? 'cart-item' : 'product'
+            }-attribute-${attributeSet.name.replace(/\s+/g, '-')}`}
         >
           <h3
-            className={`${
-              isModalView ? 'font-sm' : 'font-bold uppercase'
-            } capitalize mb-1`}
+            className={`${isModalView ? 'font-sm' : 'font-bold uppercase'
+              } capitalize mb-1`}
           >
             {attributeSet.name}:
           </h3>
 
           <div
-            className={`${
-              isModalView ? 'gap-x-2' : 'gap-x-3'
-            } flex flex-wrap gap-y-2`}
+            className={`${isModalView ? 'gap-x-2' : 'gap-x-3'
+              } flex flex-wrap gap-y-2`}
           >
-            {attributeSet.items.map((attribute) =>
-              attributeSet.type?.toLowerCase() === 'swatch' &&
-              attributeSet.name?.toLowerCase() === 'color' ? (
-                <button
-                  type="button"
-                  key={attribute.id}
-                  className={`relative ${isModalView ? 'w-5 h-5' : 'w-8 h-8'} ${
-                    isAttributeValueSelected(attribute)
-                      ? 'border-primary'
-                      : 'border-white'
-                  } border ${
-                    product.inStock ? 'hover:border-primary' : ''
-                  } transition-colors`}
-                  style={{ backgroundColor: attribute.value }}
-                  title={attribute.displayValue}
-                  onClick={() => handleAttributeClick(attribute)}
-                  disabled={!product.inStock}
-                  data-testid={`${
-                    isModalView ? 'cart-item' : 'product'
-                  }-attribute-${attributeSet.name.replace(/\s+/g, '-')}-${
-                    isModalView
-                      ? attribute.displayValue.replace(/\s+/g, '-')
-                      : attribute.value
-                  }${
-                    isAttributeValueSelected(attribute) && isModalView
-                      ? '-selected'
-                      : ''
-                  }`}
-                >
-                  <div className="absolute inset-0 border border-gray-200"></div>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  key={attribute.id}
-                  className={`${
-                    isModalView
-                      ? 'min:w-6 min:h-6 text-sm'
-                      : 'min:w-20 min:h-10'
-                  } ${
-                    isAttributeValueSelected(attribute)
-                      ? 'bg-text text-white'
-                      : 'bg-white'
-                  } px-1 flex items-center justify-center transition-colors border ${
-                    product.inStock ? 'hover:bg-gray-800 hover:text-white' : ''
-                  } border-gray-800`}
-                  disabled={!product.inStock}
-                  onClick={() => handleAttributeClick(attribute)}
-                  data-testid={`${
-                    isModalView ? 'cart-item' : 'product'
-                  }-attribute-${attributeSet.name.replace(
-                    /\s+/g,
-                    '-'
-                  )}-${attribute.displayValue.replace(/\s+/g, '-')}${
-                    isAttributeValueSelected(attribute) ? '-selected' : ''
-                  }`}
-                >
-                  {attribute.displayValue}
-                </button>
-              )
-            )}
+           {attributeSet.items.map((attribute) =>
+  attributeSet.type?.toLowerCase() === 'swatch' &&
+  attributeSet.name?.toLowerCase() === 'color' ? (
+    <button
+      type="button"
+      key={attribute.id}
+      className={`relative ${isModalView ? 'w-5 h-5' : 'w-8 h-8'} ${
+        isAttributeValueSelected(attribute)
+          ? 'border-primary'
+          : 'border-white'
+      } border ${
+        product.inStock ? 'hover:border-primary' : ''
+      } transition-colors`}
+      style={{ backgroundColor: attribute.value }}
+      title={attribute.displayValue}
+      onClick={() => handleAttributeClick(attribute)}
+      disabled={!product.inStock}
+      data-testid={`${
+        isModalView ? 'cart-item' : 'product'
+      }-attribute-${attributeSet.name.replace(/\s+/g, '-')}-${attribute.displayValue.replace(/\s+/g, '-')}${
+        isAttributeValueSelected(attribute) && isModalView
+          ? '-selected'
+          : ''
+      }`}
+    >
+      <div className="absolute inset-0 border border-gray-200"></div>
+    </button>
+  ) : (
+    <button
+      type="button"
+      key={attribute.id}
+      className={`${
+        isModalView ? 'min:w-6 min:h-6 text-sm' : 'min:w-20 min:h-10'
+      } ${
+        isAttributeValueSelected(attribute)
+          ? 'bg-text text-white'
+          : 'bg-white'
+      } px-1 flex items-center justify-center transition-colors border ${
+        product.inStock ? 'hover:bg-gray-800 hover:text-white' : ''
+      } border-gray-800`}
+      disabled={!product.inStock}
+      onClick={() => handleAttributeClick(attribute)}
+      data-testid={`${
+        isModalView ? 'cart-item' : 'product'
+      }-attribute-${attributeSet.name.replace(/\s+/g, '-')}-${attribute.displayValue.replace(/\s+/g, '-')}${
+        isAttributeValueSelected(attribute) ? '-selected' : ''
+      }`}
+    >
+      {attribute.displayValue}
+    </button>
+  )
+)}
+
+
           </div>
         </div>
       ))}
