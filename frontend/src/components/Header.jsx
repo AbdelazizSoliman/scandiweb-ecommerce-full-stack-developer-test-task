@@ -100,7 +100,8 @@ const Header = () => {
       {showModal && (
         <>
           <div
-            className="absolute inset-0 z-50 bg-black opacity-25"
+            //className="absolute inset-0 z-50 bg-black opacity-25"
+            className="absolute inset-x-0 z-60 h-screen bg-black opacity-25 top-full -right-20 -left-20"
             onClick={toggleModal}
             data-testid="cart-overlay"
           ></div>
