@@ -52,9 +52,9 @@ const Header = () => {
   useEffect(() => {
     if (cartModalVisible) {
       setShowModal(true);
-      setCartModalVisible(false);
     }
-  }, [cartModalVisible, setCartModalVisible]);
+  }, [cartModalVisible]);
+  
 
   if (dataError) {
     return (
