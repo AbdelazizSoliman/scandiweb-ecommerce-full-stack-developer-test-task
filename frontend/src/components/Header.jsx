@@ -7,10 +7,16 @@ import { GET_CATEGORIES_AND_PRODUCTS, GET_PRODUCTS } from '../GraphQl/Queries';
 
 const Header = () => {
   const { category } = useParams();
-  const { cartItems, setSelectedCategory, setProductsData } = useDataContext();
+  const {
+    cartItems,
+    setSelectedCategory,
+    setProductsData,
+    cartModalVisible,
+    setCartModalVisible,
+  } = useDataContext();
 
-  const [showModal, setShowModal] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]); // Define categories and setCategories
+  const [showModal, setShowModal] = useState(cartModalVisible);
 
   const toggleModal = () => setShowModal((prevState) => !prevState);
 
@@ -28,7 +34,7 @@ const Header = () => {
     {
       onCompleted: (data) => {
         setProductsData(data.products);
-        setCategories(data.categories.map((category) => category.name));
+        setCategories(data.categories.map((category) => category.name)); // Set categories
         setSelectedCategory(category ?? data.categories[0]?.name);
       },
     }
@@ -42,6 +48,13 @@ const Header = () => {
   useEffect(() => {
     document.body.style.overflowY = showModal ? 'hidden' : 'auto';
   }, [showModal]);
+
+  useEffect(() => {
+    if (cartModalVisible) {
+      setShowModal(true);
+      setCartModalVisible(false);
+    }
+  }, [cartModalVisible, setCartModalVisible]);
 
   if (dataError) {
     return (
@@ -58,7 +71,7 @@ const Header = () => {
   return (
     <header className="relative z-10 flex items-center justify-between">
       <NavigationMenu
-        categories={categories}
+        categories={categories} // Pass categories to NavigationMenu
         handleCategoryChange={handleCategoryChange}
       />
 

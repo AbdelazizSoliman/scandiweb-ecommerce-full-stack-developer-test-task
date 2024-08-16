@@ -10,6 +10,7 @@ export const DataProvider = ({ children }) => {
     JSON.parse(localStorage.getItem('cartItems')) || []
   );
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [cartModalVisible, setCartModalVisible] = useState(false); // New state
 
   const addToCart = (
     product = {},
@@ -68,6 +69,7 @@ export const DataProvider = ({ children }) => {
     setCartItems(existingCartItems);
     localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
 
+    setCartModalVisible(true); // Trigger the cart modal to open
     toast.success('Item added to cart! 🛒');
   };
 
@@ -154,6 +156,8 @@ export const DataProvider = ({ children }) => {
         updateCartItemQuantity,
         updateCartItemAttribute,
         emptyCart,
+        cartModalVisible,          // New
+        setCartModalVisible,       // New
       }}
     >
       {children}
